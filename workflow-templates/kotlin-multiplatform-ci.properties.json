@@ -1,0 +1,10 @@
+{
+    "name": "Kotlin Multiplatform CI",
+    "description": "A continuous integration workflow template for Kotlin Multiplatform projects built with Gradle.",
+    "categories": [
+        "Continuous integration",
+        "Kotlin",
+        "Kotlin Multiplatform",
+        "Gradle"
+    ]
+}
