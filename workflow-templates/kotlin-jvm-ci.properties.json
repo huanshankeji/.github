@@ -1,0 +1,10 @@
+{
+    "name": "Kotlin JVM CI",
+    "description": "A continuous integration workflow template for Kotlin JVM projects built with Gradle.",
+    "categories": [
+        "Continuous integration",
+        "Kotlin",
+        "Kotlin JVM",
+        "Gradle"
+    ]
+}
