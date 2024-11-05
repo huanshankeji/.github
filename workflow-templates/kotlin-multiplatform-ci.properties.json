@@ -1,6 +1,6 @@
 {
     "name": "Kotlin Multiplatform CI",
-    "description": "A continuous integration workflow template for Kotlin Multiplatform projects built with Gradle.",
+    "description": "A continuous integration workflow template for Kotlin Multiplatform projects built with Gradle. Please update the branches, runners, and the JDK versions and distributions according to your specific needs.",
     "categories": [
         "Continuous integration",
         "Kotlin",
