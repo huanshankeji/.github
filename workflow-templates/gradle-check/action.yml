@@ -1,0 +1,37 @@
+name: gradle check
+description: Run gradle check
+
+inputs:
+  jdk-versions:
+    description: comma separated list of JDK versions-distros to test against
+    required: true
+    default: ""
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+    - name: JDK8-zulu
+      if: contains('${{ inputs.jdk-versions }}', '8-zulu')
+      uses: actions/setup-java@v4
+      with:
+        java-version: 8
+        distribution: 'zulu'
+    - name: JDK8-temurin
+      if: contains('${{ inputs.jdk-versions }}', '8-temurin')
+      uses: actions/setup-java@v4
+      with:
+        java-version: 8
+        distribution: 'temurin'
+    - name: JDK11-temurin
+      if: contains('${{ inputs.jdk-versions }}', '11-temurin')
+      uses: actions/setup-java@v4
+      with:
+        java-version: 11
+        distribution: 'temurin'
+    - name: JDK17-temurin
+      if: contains('${{ inputs.jdk-versions }}', '17-temurin')
+      uses: actions/setup-java@v4
+      with:
+        java-version: 17
+        distribution: 'temurin'
