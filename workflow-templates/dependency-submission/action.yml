@@ -1,5 +1,5 @@
 name: dependency submission
-description: generate a dependency graph
+description: Generate and submit dependency graph
 
 inputs:
   jdk-version:
@@ -15,6 +15,7 @@ runs:
   using: composite
   steps:
     - uses: actions/checkout@v4
+
     - name: Set up JDK
       uses: actions/setup-java@v4
       with:

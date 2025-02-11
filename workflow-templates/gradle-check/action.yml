@@ -1,9 +1,9 @@
-name: gradle check
-description: Run gradle check
+name: Gradle check
+description: Run Gradle check
 
 inputs:
   jdk-versions:
-    description: comma separated list of JDK versions-distros to test against
+    description: Comma-separated list of JDK versions and distributions
     required: true
     default: ""
 
@@ -11,7 +11,7 @@ runs:
   using: composite
   steps:
     - uses: actions/checkout@v4
-    - name: JDK8-zulu
+    - name: Set up Azul Zulu JDK 8
       if: contains('${{ inputs.jdk-versions }}', '8-zulu')
       uses: actions/setup-java@v4
       with:
