@@ -19,21 +19,21 @@ runs:
         distribution: "zulu"
 
     - name: Set up Temurin JDK 8
-      if: contains('${{ inputs.jdk-versions }}', '8-temurin')
+      if: contains(inputs.jdk-versions, '8-temurin')
       uses: actions/setup-java@v4
       with:
         java-version: 8
         distribution: "temurin"
 
     - name: Set up Temurin JDK 11
-      if: contains('${{ inputs.jdk-versions }}', '11-temurin')
+      if: contains(inputs.jdk-versions, '11-temurin')
       uses: actions/setup-java@v4
       with:
         java-version: 11
         distribution: "temurin"
 
     - name: Set up Temurin JDK 17
-      if: contains('${{ inputs.jdk-versions }}', '17-temurin')
+      if: contains(inputs.jdk-versions, '17-temurin')
       uses: actions/setup-java@v4
       with:
         java-version: 17
