@@ -17,8 +17,8 @@ runs:
     - name: Set up JDK
       uses: actions/setup-java@v4
       with:
-        java-version: inputs.jdk-version
-        distribution: inputs.jdk-distribution
+        java-version: ${{ inputs.jdk-version }}
+        distribution: ${{ inputs.jdk-distribution }}
 
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@v4
