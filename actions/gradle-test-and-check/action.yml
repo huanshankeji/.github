@@ -42,6 +42,10 @@ runs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
+    - name: Test with Gradle Wrapper
+      shell: bash
+      run: ./gradlew test
+
     - name: Check with Gradle Wrapper
       shell: bash
       run: ./gradlew check
