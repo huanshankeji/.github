@@ -1,6 +1,12 @@
 name: Gradle check
 description: Run Gradle check
 
+inputs:
+  jdk-versions:
+    description: "Comma-separated list of JDK versions and distributions (supported ones: \"8-zulu\", \"8-temurin\", \"11-temurin\", and \"17-temurin\")"
+    required: false
+    default: "8-temurin"
+
 runs:
   using: composite
   steps:
@@ -9,7 +15,7 @@ runs:
     - name: Set up JDKs
       uses: ./../setup-javas
       with:
-        jdk-versions: "8-temurin"
+        jdk-versions: ${{ inputs.jdk-versions }}
 
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
