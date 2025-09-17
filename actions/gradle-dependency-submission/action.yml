@@ -9,12 +9,12 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v4
-
     - name: Set up JDKs
-      uses: ./actions/setup-javas/action.yml
+      uses: ./actions/setup-javas
       with:
         jdk-versions: ${{ inputs.jdk-versions }}
+
+    - uses: actions/checkout@v4
 
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@v4
