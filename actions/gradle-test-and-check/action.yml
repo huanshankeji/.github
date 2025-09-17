@@ -7,7 +7,7 @@ runs:
     - uses: actions/checkout@v4
 
     - name: Set up JDKs
-      uses: actions/setup-javas
+      uses: ./../setup-javas
 
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
