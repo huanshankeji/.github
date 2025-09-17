@@ -12,7 +12,7 @@ runs:
     - uses: actions/checkout@v4
 
     - name: Set up JDKs
-      uses: ./../setup-javas
+      uses: ./actions/setup-javas
       with:
         jdk-versions: ${{ inputs.jdk-versions }}
 
