@@ -1,0 +1,40 @@
+name: Setup Java
+description: A shortcut action that sets up multiple JDKs
+
+inputs:
+  jdk-versions:
+    description: "Comma-separated list of JDK versions and distributions (supported ones: \"8-zulu\", \"8-temurin\", \"11-temurin\", and \"17-temurin\")"
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Azul Zulu JDK 8
+      if: contains(inputs.jdk-versions, '8-zulu')
+      uses: actions/setup-java@v5
+      with:
+        java-version: 8
+        distribution: "zulu"
+
+    - name: Set up Temurin JDK 8
+      if: contains(inputs.jdk-versions, '8-temurin')
+      uses: actions/setup-java@v5
+      with:
+        java-version: 8
+        distribution: "temurin"
+
+    - name: Set up Temurin JDK 11
+      if: contains(inputs.jdk-versions, '11-temurin')
+      uses: actions/setup-java@v5
+      with:
+        java-version: 11
+        distribution: "temurin"
+
+    - name: Set up Temurin JDK 17
+      if: contains(inputs.jdk-versions, '17-temurin')
+      uses: actions/setup-java@v5
+      with:
+        java-version: 17
+        distribution: "temurin"

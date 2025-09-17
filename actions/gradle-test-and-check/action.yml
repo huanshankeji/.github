@@ -11,33 +11,8 @@ runs:
   steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Azul Zulu JDK 8
-      if: contains(inputs.jdk-versions, '8-zulu')
-      uses: actions/setup-java@v5
-      with:
-        java-version: 8
-        distribution: "zulu"
-
-    - name: Set up Temurin JDK 8
-      if: contains(inputs.jdk-versions, '8-temurin')
-      uses: actions/setup-java@v5
-      with:
-        java-version: 8
-        distribution: "temurin"
-
-    - name: Set up Temurin JDK 11
-      if: contains(inputs.jdk-versions, '11-temurin')
-      uses: actions/setup-java@v5
-      with:
-        java-version: 11
-        distribution: "temurin"
-
-    - name: Set up Temurin JDK 17
-      if: contains(inputs.jdk-versions, '17-temurin')
-      uses: actions/setup-java@v5
-      with:
-        java-version: 17
-        distribution: "temurin"
+    - name: Set up JDKs
+      uses: actions/setup-javas
 
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4

@@ -2,23 +2,17 @@ name: Dependency submission
 description: Generate and submit dependency graph
 
 inputs:
-  jdk-version:
-    description: "The JDK version to use"
-    # Android SDK requires JDK 17 now
-    default: "17"
-  jdk-distribution:
-    description: "The JDK distribution to use"
-    default: "temurin"
+  jdk-versions:
+    description: "Comma-separated list of JDK versions and distributions (supported ones: \"8-zulu\", \"8-temurin\", \"11-temurin\", and \"17-temurin\")"
+    required: true
 
 runs:
   using: composite
   steps:
     - uses: actions/checkout@v4
-    - name: Set up JDK
-      uses: actions/setup-java@v5
-      with:
-        java-version: ${{ inputs.jdk-version }}
-        distribution: ${{ inputs.jdk-distribution }}
+    
+    - name: Set up JDKs
+      uses: actions/setup-javas
 
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@v4
