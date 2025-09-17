@@ -11,7 +11,7 @@ runs:
   steps:
     - name: Set up JDKs
       # Must use fully-qualified reference; relative paths point to consumer repo, not this one.
-      uses: huanshankeji/.github/actions/setup-javas@main
+      uses: huanshankeji/.github/actions/setup-javas@b8b32179d9722d6bb315b9a0c1efff5f1c75e0b1
       with:
         jdk-versions: ${{ inputs.jdk-versions }}
 
