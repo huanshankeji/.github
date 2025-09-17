@@ -10,7 +10,8 @@ runs:
   using: composite
   steps:
     - name: Set up JDKs
-      uses: ./actions/setup-javas
+      # Must use fully-qualified reference; relative paths point to consumer repo, not this one.
+      uses: huanshankeji/.github/actions/setup-javas@main
       with:
         jdk-versions: ${{ inputs.jdk-versions }}
 

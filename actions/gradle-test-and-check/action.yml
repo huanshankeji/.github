@@ -9,15 +9,14 @@ inputs:
 runs:
   using: composite
   steps:
-    # IMPORTANT: Call sibling composite action BEFORE checking out the caller repository.
-    # If we checkout first, we replace the workspace (which originally contains this .github repo) with the caller repo
-    # and then the relative ./actions/... path would no longer exist.
+    # NOTE: When this composite action is consumed from another repository, relative paths like ./actions/setup-javas
+    # resolve against the CONSUMER repo root, not this .github repository. Therefore we must use a fully-qualified
+    # action reference for sibling actions.
     - name: Set up JDKs
-      uses: ./actions/setup-javas
+      uses: huanshankeji/.github/actions/setup-javas@main
       with:
         jdk-versions: ${{ inputs.jdk-versions }}
 
-    # Now fetch the caller repository so that Gradle can run on its sources.
     - name: Checkout repository
       uses: actions/checkout@v4
 
