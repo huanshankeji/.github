@@ -8,6 +8,8 @@ runs:
 
     - name: Set up JDKs
       uses: ./../setup-javas
+      with:
+        jdk-versions: "8-temurin"
 
     - name: Generate and submit dependency graph
       uses: gradle/actions/dependency-submission@v4

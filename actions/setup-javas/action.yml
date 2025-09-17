@@ -4,8 +4,7 @@ description: A shortcut action that sets up multiple JDKs
 inputs:
   jdk-versions:
     description: "Comma-separated list of JDK versions and distributions (supported ones: \"8-zulu\", \"8-temurin\", \"11-temurin\", and \"17-temurin\")"
-    required: false
-    default: "8-temurin"
+    required: true
 
 runs:
   using: composite
