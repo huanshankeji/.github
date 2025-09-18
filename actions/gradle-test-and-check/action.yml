@@ -19,6 +19,7 @@ runs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
 
+    # Consider removing this reverting coomit 88f302c822163b421452d37945486c3b2a2ac54b as it seems only a JVM project and a multiplatform project with the Android target have this `test` task
     - name: Test with Gradle Wrapper
       shell: bash
       run: ./gradlew test
