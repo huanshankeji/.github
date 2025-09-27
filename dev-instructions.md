@@ -8,7 +8,7 @@ When you encounter a dependency of a snapshot version under our group prefix `co
 - Switch to a proper branch. Prefer `dev` branches over `main` and other branches in the dependency project, unless otherwise instructed.
 - Run `publishToMavenLocal` in the dependency project to make the consuming project build.
 - If the code of one branch causes the consuming project not to build, try:
-   - checking out the recent commit messages of the cusuming project to see if there is related commit or branch information;
+   - checking out the recent commit messages of the consuming project to see if there is related commit or branch information;
    - switching to other branches in the dependency project, preferably those with newer commits;
    - asking the maintainer which branch of the dependency project the consuming project currently depends on.
 
