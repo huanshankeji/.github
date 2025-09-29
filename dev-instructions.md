@@ -1,6 +1,6 @@
 # Development instructions
 
-## About snapshot dependencies of our library projects
+## Publish snapshot dependencies of our library projects to Maven local
 
 When you encounter a dependency of a snapshot version under our group prefix `com.huanshankeji` in a consuming project, follow these steps:
 
