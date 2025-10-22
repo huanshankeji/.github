@@ -10,6 +10,7 @@ When you encounter a dependency of a snapshot version under our group prefix `co
 - If the code of one branch causes the consuming project not to build, try:
    - as already mentioned above, switching to `main` if `dev` doesn't work or exist;
    - checking out the recent commit messages of the consuming project to see if there is related commit or branch information;
+   - switching a branch with the same name as this one;
    - switching to other branches in the dependency project, preferably those with newer commits;
    - asking the maintainer which branch of the dependency project the consuming project currently depends on.
 
