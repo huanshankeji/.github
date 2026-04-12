@@ -3,7 +3,7 @@ description: A shortcut action that sets up multiple JDKs
 
 inputs:
   jdk-versions:
-    description: "Comma-separated list of JDK versions and distributions (supported ones: \"8-zulu\", \"8-temurin\", \"11-temurin\", and \"17-temurin\")"
+    description: "Comma-separated list of JDK versions and distributions (supported ones: \"8-zulu\", \"8-temurin\", \"11-temurin\", \"17-temurin\", \"21-temurin\", and \"25-temurin\")"
     required: true
 
 runs:
@@ -35,4 +35,18 @@ runs:
       uses: actions/setup-java@v5
       with:
         java-version: 17
+        distribution: "temurin"
+
+    - name: Set up Temurin JDK 21
+      if: contains(inputs.jdk-versions, '21-temurin')
+      uses: actions/setup-java@v5
+      with:
+        java-version: 21
+        distribution: "temurin"
+
+    - name: Set up Temurin JDK 25
+      if: contains(inputs.jdk-versions, '25-temurin')
+      uses: actions/setup-java@v5
+      with:
+        java-version: 25
         distribution: "temurin"
