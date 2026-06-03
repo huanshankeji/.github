@@ -2,8 +2,11 @@
 
 ## Branch versioning conventions
 
+- **`dev`**: Active development branch. Snapshot dependencies and a snapshot project version are both permitted.
 - **`main`**: Must not use snapshot dependencies — only stable dependency versions. The project version is conventionally a snapshot version (for example `1.0.0-SNAPSHOT`).
 - **`release`**: Merges from `main` and carries a stable project version. Everything must be stable: dependency versions and the project version. No snapshot dependencies and no snapshot project version.
+
+Other development or feature branches follow the same conventions as `dev` unless a maintainer specifies otherwise.
 
 ## Publish snapshot dependencies of our library projects to Maven local
 
