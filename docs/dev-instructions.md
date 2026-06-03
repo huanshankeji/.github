@@ -1,5 +1,10 @@
 # Development instructions
 
+## Branch versioning conventions
+
+- **`main`**: Must not use snapshot dependencies — only stable dependency versions. The project version is conventionally a snapshot version (for example `1.0.0-SNAPSHOT`).
+- **`release`**: Merges from `main` and carries a stable project version. Everything must be stable: dependency versions and the project version. No snapshot dependencies and no snapshot project version.
+
 ## Publish snapshot dependencies of our library projects to Maven local
 
 When you encounter a dependency of a snapshot version under our group prefix `com.huanshankeji` in a consuming project, follow these steps:
