@@ -37,14 +37,17 @@ Also see [Kotlin/kotlin-agent-skills](https://github.com/Kotlin/kotlin-agent-ski
 
 ### Installation
 
-Install into the target repository (or your global skills directory) with the [skills CLI](https://github.com/vercel-labs/skills):
+Install into the target repository (or your global skills directory) with the [skills CLI](https://github.com/vercel-labs/skills). Skills live in subdirectories under each repo’s `skills/` folder, so point at a specific skill path:
 
 ```bash
-npx skills add huanshankeji/kotlin-skills
-npx skills add huanshankeji/skills
+npx skills add huanshankeji/kotlin-skills/skills/gradle-wrapper-update
+npx skills add huanshankeji/kotlin-skills/skills/kotlin-debugging-unresolved-reference-file-clash
+npx skills add huanshankeji/skills/skills/<skill-name>
 ```
 
-Or copy individual skill folders from a repo’s `skills/` directory into a project-local skills path (for example `.github/skills/`, `.claude/skills/`, or `.agents/skills/`). See each repository’s README for layout details.
+Or copy individual skill folders from a repo’s `skills/` directory into a project-local skills path (for example `.agents/skills/`, `.github/skills/`, or `.claude/skills/`). See each repository’s README for layout details.
+
+Do **not** commit installed skill files to the repository unless explicitly asked to install skills there.
 
 ### kotlin-skills catalog
 
