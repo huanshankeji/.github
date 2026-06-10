@@ -24,6 +24,41 @@ This file is [`docs/general-agent-instructions.md`](https://github.com/huanshank
 
 ---
 
+## Agent skills
+
+We publish reusable [Agent Skills](https://agentskills.io) for workflows that agents should not improvise. **When a task matches a skill’s description, load and follow that skill** (via your platform’s skill tool, or by reading the skill’s `SKILL.md`) instead of inventing steps from scratch.
+
+| Repository | Scope |
+| --- | --- |
+| [kotlin-skills](https://github.com/huanshankeji/kotlin-skills) | Kotlin, Gradle, and JVM/KMP build workflows |
+| [skills](https://github.com/huanshankeji/skills) | General agent skills (not Kotlin-specific) |
+
+Also see [Kotlin/kotlin-agent-skills](https://github.com/Kotlin/kotlin-agent-skills) for skills maintained by JetBrains.
+
+### Installation
+
+Install into the target repository (or your global skills directory) with the [skills CLI](https://github.com/vercel-labs/skills):
+
+```bash
+npx skills add huanshankeji/kotlin-skills
+npx skills add huanshankeji/skills
+```
+
+Or copy individual skill folders from a repo’s `skills/` directory into a project-local skills path (for example `.github/skills/`, `.claude/skills/`, or `.agents/skills/`). See each repository’s README for layout details.
+
+### kotlin-skills catalog
+
+| Skill | Use when |
+| --- | --- |
+| [gradle-wrapper-update](https://github.com/huanshankeji/kotlin-skills/tree/main/skills/gradle-wrapper-update) | Upgrading or downgrading the Gradle wrapper (`gradlew`, `gradle-wrapper.properties`, `gradle-wrapper.jar`) |
+| [kotlin-debugging-unresolved-reference-file-clash](https://github.com/huanshankeji/kotlin-skills/tree/main/skills/kotlin-debugging-unresolved-reference-file-clash) | Kotlin JVM or KMP reports “Unresolved reference” (or similar) even though the symbol exists and dependencies look correct — especially after adding, moving, or renaming `.kt` files with top-level declarations |
+
+### skills catalog
+
+Check [skills](https://github.com/huanshankeji/skills) for general-purpose skills that apply across stacks. Prefer a repo-local or org skill over ad hoc steps when one matches the task.
+
+---
+
 ## Open source Kotlin project hierarchy
 
 **Only public, non-fork Kotlin repositories** created by `@huanshankeji` are listed below.
@@ -77,6 +112,7 @@ flowchart TB
 ### Related organization resources
 
 - **Profile / intro:** [profile/README.md](../profile/README.md)
+- **Agent skills:** [kotlin-skills](https://github.com/huanshankeji/kotlin-skills), [skills](https://github.com/huanshankeji/skills) — see [Agent skills](#agent-skills)
 - **Shared CI & Actions:** workflow templates and composite actions in this repo (`workflow-templates/`, `actions/`)
 
 ---
@@ -85,6 +121,7 @@ flowchart TB
 
 1. Open the target repo and read its `README.md`, `CONTRIBUTING.md`, and any repo-local agent file (`AGENTS.md`, `.github/copilot-instructions.md`).
 2. Apply the [required reading](#required-reading) for the task type.
-3. If the task spans multiple repos (typical on `dev` with snapshots), follow [dev-instructions.md](dev-instructions.md) before running `./gradlew check` or `./gradlew build`.
+3. If the task matches an [agent skill](#agent-skills) (Gradle wrapper updates, misleading Kotlin “Unresolved reference” errors, or a skill in [skills](https://github.com/huanshankeji/skills)), install or load that skill and follow it.
+4. If the task spans multiple repos (typical on `dev` with snapshots), follow [dev-instructions.md](dev-instructions.md) before running `./gradlew check` or `./gradlew build`.
 
 When instructions conflict, **repo-local agent docs and maintainers’ task directions win**; this file provides the shared baseline and library map.
