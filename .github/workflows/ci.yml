@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  workflow_call:
+    inputs:
+      jdk-versions:
+        description: "Comma-separated JDK versions passed to setup-javas"
+        required: true
+        type: string
+      runs-on:
+        description: "Runner label for both jobs"
+        required: false
+        type: string
+        default: macos-latest
+
+jobs:
+  check:
+    runs-on: ${{ inputs.runs-on }}
+    permissions:
+      contents: read
+    steps:
+      - uses: huanshankeji/.github/actions/gradle-check@improve-cross-repo-dependency
+        with:
+          jdk-versions: ${{ inputs.jdk-versions }}
+
+  dependency-submission:
+    runs-on: ${{ inputs.runs-on }}
+    permissions:
+      contents: write
+    steps:
+      - uses: huanshankeji/.github/actions/gradle-dependency-submission@improve-cross-repo-dependency
+        with:
+          jdk-versions: ${{ inputs.jdk-versions }}

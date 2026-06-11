@@ -3,7 +3,7 @@ description: Generate and submit dependency graph
 
 inputs:
   jdk-versions:
-    description: "Comma-separated list of JDK versions and distributions (supported ones: \"8-zulu\", \"8-temurin\", \"11-temurin\", and \"17-temurin\")"
+    description: "Comma-separated list of JDK versions and distributions (supported ones: \"8-zulu\", \"8-temurin\", \"11-temurin\", \"17-temurin\", \"21-temurin\", and \"25-temurin\")"
     required: true
 
 runs:

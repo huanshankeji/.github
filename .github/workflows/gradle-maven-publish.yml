@@ -1,0 +1,58 @@
+name: Gradle Maven publish
+
+on:
+  workflow_call:
+    inputs:
+      jdk-versions:
+        description: "Comma-separated JDK versions passed to setup-javas"
+        required: true
+        type: string
+      runs-on:
+        description: "Runner label"
+        required: false
+        type: string
+        default: macos-latest
+    secrets:
+      GH_ACTOR:
+        required: false
+      GH_TOKEN:
+        required: false
+      GITLAB_PRIVATE_TOKEN:
+        required: false
+      ORG_GRADLE_PROJECT_mavenCentralUsername:
+        required: false
+      ORG_GRADLE_PROJECT_mavenCentralPassword:
+        required: false
+      ORG_GRADLE_PROJECT_signingInMemoryKey:
+        required: false
+      ORG_GRADLE_PROJECT_signingInMemoryKeyPassword:
+        required: false
+
+jobs:
+  publish:
+    runs-on: ${{ inputs.runs-on }}
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDKs
+        uses: huanshankeji/.github/actions/setup-javas@v0.2.0
+        with:
+          jdk-versions: ${{ inputs.jdk-versions }}
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Publish with Gradle Wrapper
+        shell: bash
+        run: ./gradlew publish --parallel
+        env:
+          USERNAME: ${{ secrets.GH_ACTOR }}
+          TOKEN: ${{ secrets.GH_TOKEN }}
+          GITLAB_PRIVATE_TOKEN: ${{ secrets.GITLAB_PRIVATE_TOKEN }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.ORG_GRADLE_PROJECT_mavenCentralUsername }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.ORG_GRADLE_PROJECT_mavenCentralPassword }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKey }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.ORG_GRADLE_PROJECT_signingInMemoryKeyPassword }}

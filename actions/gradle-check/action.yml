@@ -3,7 +3,7 @@ description: Run Gradle check
 
 inputs:
   jdk-versions:
-    description: "Comma-separated list of JDK versions and distributions (supported ones: \"8-zulu\", \"8-temurin\", \"11-temurin\", and \"17-temurin\")"
+    description: "Comma-separated list of JDK versions and distributions (supported ones: \"8-zulu\", \"8-temurin\", \"11-temurin\", \"17-temurin\", \"21-temurin\", and \"25-temurin\")"
     required: true
 
 runs:
@@ -18,11 +18,6 @@ runs:
 
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
-
-    # Consider removing this reverting coomit 88f302c822163b421452d37945486c3b2a2ac54b as it seems only a JVM project and a multiplatform project with the Android target have this `test` task
-    - name: Test with Gradle Wrapper
-      shell: bash
-      run: ./gradlew test
 
     - name: Check with Gradle Wrapper
       shell: bash

@@ -125,5 +125,6 @@ flowchart TB
 2. Apply the [required reading](#required-reading) for the task type.
 3. If the task matches an [agent skill](#agent-skills) (Gradle wrapper updates, misleading Kotlin “Unresolved reference” errors, or a skill in [skills](https://github.com/huanshankeji/skills)), install or load that skill and follow it.
 4. If the task spans multiple repos (typical on `dev` with snapshots), follow [dev-instructions.md](dev-instructions.md) before running `./gradlew check` or `./gradlew build`.
+5. When working across **multiple Gradle projects** in one session, pass **`--no-daemon`** on every `./gradlew` invocation (and run `./gradlew --stop` first if daemons are already running). Many concurrent daemons can exhaust memory and crash the machine.
 
 When instructions conflict, **repo-local agent docs and maintainers’ task directions win**; this file provides the shared baseline and library map.
