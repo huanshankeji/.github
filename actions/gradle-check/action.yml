@@ -5,6 +5,15 @@ inputs:
   jdk-versions:
     description: "Comma-separated list of JDK versions and distributions (supported ones: \"8-zulu\", \"8-temurin\", \"11-temurin\", \"17-temurin\", \"21-temurin\", and \"25-temurin\")"
     required: true
+  gh-actor:
+    description: "GitHub Packages username (USERNAME for Gradle)"
+    required: false
+  gh-token:
+    description: "GitHub Packages token (TOKEN for Gradle)"
+    required: false
+  gitlab-private-token:
+    description: "GitLab private token (GITLAB_PRIVATE_TOKEN for Gradle)"
+    required: false
 
 runs:
   using: composite
@@ -21,4 +30,8 @@ runs:
 
     - name: Check with Gradle Wrapper
       shell: bash
-      run: ./gradlew check
+      run: ./gradlew check --no-daemon
+      env:
+        USERNAME: ${{ inputs.gh-actor }}
+        TOKEN: ${{ inputs.gh-token }}
+        GITLAB_PRIVATE_TOKEN: ${{ inputs.gitlab-private-token }}
