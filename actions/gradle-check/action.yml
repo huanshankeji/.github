@@ -18,15 +18,15 @@ inputs:
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Set up JDKs
-      uses: huanshankeji/.github/actions/setup-javas@v0.2.0
+      uses: huanshankeji/.github/actions/setup-javas@v0.3.0
       with:
         jdk-versions: ${{ inputs.jdk-versions }}
 
     - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v4
+      uses: gradle/actions/setup-gradle@v6
 
     - name: Check with Gradle Wrapper
       shell: bash
