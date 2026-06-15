@@ -46,5 +46,5 @@ jobs:
           if [ "${{ github.ref }}" = "refs/heads/release" ]; then
             ./gradlew publishToMavenCentral "${gpr_args[@]}"
           else
-            ./gradlew publishAllPublicationsToGitHubPackagesRepository --parallel "${gpr_args[@]}"
+            ./gradlew publishAllPublicationsToGitHubPackagesRepository --parallel --no-configuration-cache "${gpr_args[@]}"
           fi
