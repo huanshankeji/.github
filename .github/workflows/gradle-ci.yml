@@ -1,4 +1,4 @@
-name: Gradle Maven publish
+name: Gradle CI
 
 on:
   workflow_call:
@@ -8,23 +8,18 @@ on:
         required: true
         type: string
       runs-on:
-        description: "Runner label"
+        description: "Runner label for both jobs"
         required: true
         type: string
 
 jobs:
-  publish:
+  check:
     runs-on: ${{ inputs.runs-on }}
     permissions:
       contents: read
-      packages: write
     env:
       ORG_GRADLE_PROJECT_gprUser: ${{ secrets.GPR_USER }}
       ORG_GRADLE_PROJECT_gprKey: ${{ secrets.GPR_KEY }}
-      ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
-      ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-      ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_IN_MEMORY_KEY }}
-      ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_IN_MEMORY_KEY_PASSWORD }}
     steps:
       - uses: actions/checkout@v6
 
@@ -36,11 +31,24 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
 
-      - name: Publish with Gradle Wrapper
+      - name: Check with Gradle Wrapper
         shell: bash
-        run: |
-          if [ "${{ github.ref }}" = "refs/heads/release" ]; then
-            ./gradlew publishToMavenCentral
-          else
-            ./gradlew publishAllPublicationsToGitHubPackagesRepository --parallel
-          fi
+        run: ./gradlew check
+
+  dependency-submission:
+    runs-on: ${{ inputs.runs-on }}
+    permissions:
+      contents: write
+    env:
+      ORG_GRADLE_PROJECT_gprUser: ${{ secrets.GPR_USER }}
+      ORG_GRADLE_PROJECT_gprKey: ${{ secrets.GPR_KEY }}
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up JDKs
+        uses: huanshankeji/.github/actions/setup-javas@v0.3.0
+        with:
+          jdk-versions: ${{ inputs.jdk-versions }}
+
+      - name: Generate and submit dependency graph
+        uses: gradle/actions/dependency-submission@v6

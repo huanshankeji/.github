@@ -28,7 +28,6 @@ Repository order matters. **Maven local is always consulted first** for Huanshan
 |---|---|
 | Public stable (`com.huanshankeji`, release version) | Maven Central (+ existing public repos; do not add Google where a repo did not already use it) |
 | Public dev-commit | Maven local → GitHub Packages |
-| Internal stable or dev-commit | Maven local → GitLab project registry |
 | Dirty / legacy `-SNAPSHOT` | Maven local only |
 | Gradle plugin (stable) | Gradle Plugin Portal |
 | Gradle plugin (dev-commit) | Maven local → GitHub Packages |
@@ -48,24 +47,23 @@ publicOpenSourceDependencyRepositories {
 }
 ```
 
-Internal repos duplicate prefix-based filtering in their own `settings.gradle.kts` or `gradle/dependency-repositories.gradle.kts` (not in published plugins).
-
 Android KMP projects that already used `google()` may keep an explicit `gradle/dependency-repositories.gradle.kts` applied from `settings.gradle.kts` instead of the settings plugin when the plugin interferes with AGP version inference.
 
 ## Local development workflow
 
 1. Publish upstream `gradle-common` plugins to Maven local when working on a dev-commit version: `./gradlew publishToMavenLocal` in `gradle-common`.
 2. For **dirty** local changes in a dependency, run `publishToMavenLocal` in that dependency project so consumers pick up the `-dirty-SNAPSHOT` artifact.
-3. For **committed** dev-commit versions, consumers resolve from Maven local (if present) then GitHub Packages or GitLab as configured — you do not need `publishToMavenLocal` unless your tree is dirty.
+3. For **committed** dev-commit versions, consumers resolve from Maven local (if present) then GitHub Packages as configured — you do not need `publishToMavenLocal` unless your tree is dirty.
 4. Apply dependency rules recursively when configuring transitive Huanshankeji dependencies.
 
 ## CI and publishing
 
-- Consumer repos use reusable workflows from `huanshankeji/.github`: `ci.yml` (check + dependency submission) and `gradle-maven-publish.yml` (`./gradlew publish --parallel`).
-- GitHub Packages auth in workflows: secrets `GH_ACTOR` and `GH_TOKEN` (mapped to `USERNAME` / `TOKEN` for Gradle). GitLab: `GITLAB_PRIVATE_TOKEN`.
-- OSS libraries on `main`: publish dev-commit to GitHub Packages. On `release`: publish stable to Maven Central (automatic release) and GitHub Packages.
-- Internal libraries: publish dev-commit and stable to GitLab from GitHub Actions.
-- Maven Central signing and credentials apply only on `release` builds.
+- OSS libraries use reusable workflows from `huanshankeji/.github`: `gradle-ci.yml` and `gradle-maven-publish.yml`.
+- Registry credentials: create GitHub Actions secrets using uppercase snake case (GitHub stores secret names in uppercase). Reusable workflows map them to `ORG_GRADLE_PROJECT_*` environment variables with camelCase Gradle property suffixes; do not map secrets in consumer workflow YAML (use `secrets: inherit` on the `uses:` job).
+  - GitHub Packages (org secrets): `GPR_USER`, `GPR_KEY`
+  - Maven Central + signing (org secrets, release publish): `MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD`, `SIGNING_IN_MEMORY_KEY`, `SIGNING_IN_MEMORY_KEY_PASSWORD`
+- Publish on all branches (`push: branches: ["**"]`). On `release`: `./gradlew publishToMavenCentral`; otherwise `./gradlew publishAllPublicationsToGitHubPackagesRepository --parallel`.
+- Set `jdk-versions` to the project JVM toolchain; if the toolchain is below 17, also include `17-temurin` for Gradle. Pass `runs-on` explicitly (typically `ubuntu-latest` for JVM OSS publish).
 
 ## Branches
 

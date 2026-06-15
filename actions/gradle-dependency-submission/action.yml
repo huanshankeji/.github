@@ -1,5 +1,8 @@
 name: Dependency submission
-description: Generate and submit dependency graph
+description: >
+  Deprecated — prefer inlining checkout, setup-javas, and dependency-submission
+  in reusable workflows so extra setup steps can be inserted per job.
+  Kept for backward compatibility with existing workflow references.
 
 inputs:
   jdk-versions:
