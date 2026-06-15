@@ -21,8 +21,8 @@ jobs:
     env:
       ORG_GRADLE_PROJECT_gprUser: ${{ secrets.GPR_USER }}
       ORG_GRADLE_PROJECT_gprKey: ${{ secrets.GPR_KEY }}
-      USERNAME: ${{ secrets.GPR_USER || secrets.GH_ACTOR }}
-      TOKEN: ${{ secrets.GPR_KEY || secrets.GH_TOKEN }}
+      USERNAME: ${{ secrets.GPR_USER }}
+      TOKEN: ${{ secrets.GPR_KEY }}
       ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
       ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
       ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_IN_MEMORY_KEY }}
@@ -40,13 +40,9 @@ jobs:
 
       - name: Publish with Gradle Wrapper
         shell: bash
-        env:
-          GPR_USER: ${{ secrets.GPR_USER }}
-          GPR_KEY: ${{ secrets.GPR_KEY }}
         run: |
-          gpr_args=(-PgprUser="$GPR_USER" -PgprKey="$GPR_KEY" -PGitHubPackagesUsername="$GPR_USER" -PGitHubPackagesPassword="$GPR_KEY")
           if [ "${{ github.ref }}" = "refs/heads/release" ]; then
-            ./gradlew publishToMavenCentral "${gpr_args[@]}"
+            ./gradlew publishToMavenCentral
           else
-            ./gradlew publishAllPublicationsToGitHubPackagesRepository --parallel --no-configuration-cache "${gpr_args[@]}"
+            ./gradlew publishAllPublicationsToGitHubPackagesRepository --parallel
           fi
