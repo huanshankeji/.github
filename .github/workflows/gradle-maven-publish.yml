@@ -42,7 +42,7 @@ jobs:
           GPR_USER: ${{ secrets.GPR_USER }}
           GPR_KEY: ${{ secrets.GPR_KEY }}
         run: |
-          gpr_args=(-PgprUser="$GPR_USER" -PgprKey="$GPR_KEY")
+          gpr_args=(-PgprUser="$GPR_USER" -PgprKey="$GPR_KEY" -PGitHubPackagesUsername="$GPR_USER" -PGitHubPackagesPassword="$GPR_KEY")
           if [ "${{ github.ref }}" = "refs/heads/release" ]; then
             ./gradlew publishToMavenCentral "${gpr_args[@]}"
           else
