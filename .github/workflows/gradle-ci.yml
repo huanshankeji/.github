@@ -33,7 +33,10 @@ jobs:
 
       - name: Check with Gradle Wrapper
         shell: bash
-        run: ./gradlew check
+        env:
+          GPR_USER: ${{ secrets.GPR_USER }}
+          GPR_KEY: ${{ secrets.GPR_KEY }}
+        run: ./gradlew check -PgprUser="$GPR_USER" -PgprKey="$GPR_KEY"
 
   dependency-submission:
     runs-on: ${{ inputs.runs-on }}
