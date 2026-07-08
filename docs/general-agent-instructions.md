@@ -85,20 +85,18 @@ flowchart TB
   gradle_common --> cmp_unified
 
   kotlin_common --> exposed_gadt
-  kotlin_common --> compose_html
   kotlin_common --> exposed_vertx
-  kotlin_common --> cmp_unified
 
   exposed_gadt -->|"crud-with-mapper module"| exposed_vertx
   compose_html --> cmp_unified
 ```
 
 - **gradle-common** — Shared Gradle plugins (`kotlin-common-gradle-plugins`, `gradle-plugins`, `common-gradle-dependencies`, etc.). Other repos pull these into `buildSrc` for aligned Kotlin, Compose, Dokka, and dependency versions. Not a runtime app dependency for end users, but required to build sibling libraries.
-- **kotlin-common** — Foundation Kotlin/KMP extensions (core, coroutines, Exposed, Vert.x, Ktor, Arrow, etc.). Most other libraries depend on one or more `kotlin-common-*` modules.
+- **kotlin-common** — Foundation Kotlin/KMP extensions (core, coroutines, Exposed, Vert.x, Ktor, Arrow, etc.). **exposed-gadt-mapping** and **exposed-vertx-sql-client** depend on `kotlin-common-*` modules.
 - **exposed-gadt-mapping** — Exposed DSL mappings with GADT-style modeling. **No longer actively maintained**; mapping code is usually generated ad hoc with AI agents instead. Still published and used by the optional `crud-with-mapper` module in **exposed-vertx-sql-client**.
 - **exposed-vertx-sql-client** — Run Exposed statements on Vert.x reactive SQL clients (PostgreSQL, MySQL, Oracle, SQL Server). The optional **`crud-with-mapper`** module integrates **exposed-gadt-mapping**.
-- **compose-html-material** — Material 3 wrappers for Compose HTML (Material Web).
-- **compose-multiplatform-html-unified** — Unified Compose Multiplatform APIs for Compose UI and Compose HTML; **compose-html-material** is a DOM/Material source for the HTML side.
+- **compose-html-material** — Material 3 wrappers for Compose HTML (Material Web). Does **not** depend on **kotlin-common** at runtime; only **gradle-common** for build plugins.
+- **compose-multiplatform-html-unified** — Unified Compose Multiplatform APIs for Compose UI and Compose HTML; **compose-html-material** is a DOM/Material source for the HTML side. Does **not** depend on **kotlin-common** at runtime.
 
 ### Repository catalog
 

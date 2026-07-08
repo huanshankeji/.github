@@ -41,11 +41,22 @@ plugins {
 
 publicOpenSourceDependencyRepositories {
     huanshankejiMavenLocal()
-    githubPackages("kotlin-common") // add each GitHub Packages repo you need
+    githubPackages(/* each GitHub Packages repo you consume at runtime */)
     mavenCentralExcludingHuanshankejiNonStable()
     // google() only when the project already relied on Google's Maven repository (e.g. Android KMP)
 }
 ```
+
+List only sibling repos whose **runtime** artifacts you resolve from GitHub Packages — not every OSS library needs **kotlin-common**. Examples:
+
+| Repository | Typical `githubPackages(...)` |
+| --- | --- |
+| **kotlin-common** | _(none — Maven Central / maven local for Huanshankeji artifacts)_ |
+| **compose-html-material** | _(none — no runtime Huanshankeji siblings)_ |
+| **compose-multiplatform-html-unified** | `"compose-html-material"` |
+| **exposed-vertx-sql-client** | `"kotlin-common"`, `"exposed-gadt-mapping"` |
+
+**gradle-common** dev-commit plugins are resolved via `pluginManagement` (Maven local → GitHub Packages for `huanshankeji/gradle-common`), not via `githubPackages(...)` in this block.
 
 Android KMP projects that already used `google()` may keep an explicit `gradle/dependency-repositories.gradle.kts` applied from `settings.gradle.kts` instead of the settings plugin when the plugin interferes with AGP version inference.
 
