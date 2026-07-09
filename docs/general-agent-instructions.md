@@ -127,3 +127,15 @@ flowchart TB
 4. If the task spans multiple repos (typical on `dev` with snapshots), follow [dev-instructions.md](dev-instructions.md) before running `./gradlew check` or `./gradlew build`.
 
 When instructions conflict, **repo-local agent docs and maintainers’ task directions win**; this file provides the shared baseline and library map.
+
+---
+
+## Editing existing files
+
+When changing code, **preserve existing comments and blank lines** unless the user explicitly asks you to remove or reformat them, or the change inherently requires it (for example, deleting the code a comment describes).
+
+- Do not remove comments on your own judgment — even if they look redundant, outdated, or unnecessary.
+- Do not remove or collapse blank lines to “clean up” formatting or shrink the diff.
+- Do not reformat unrelated parts of a file (whitespace, line breaks, comment style) while making a focused change.
+
+Keep edits minimal: change only what the task requires, and leave surrounding comments and vertical spacing as you found them.
