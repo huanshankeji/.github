@@ -27,13 +27,11 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
-      - name: Set up JDKs
-        uses: huanshankeji/.github/actions/setup-javas@v0.3.0
+      - name: Set up JDKs and Gradle
+        uses: huanshankeji/.github/actions/setup-javas-and-gradle@improve-cross-repo-dependency
         with:
           jdk-versions: ${{ inputs.jdk-versions }}
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v6
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
 
       - name: Check with Gradle Wrapper
         shell: bash
@@ -57,3 +55,5 @@ jobs:
 
       - name: Generate and submit dependency graph
         uses: gradle/actions/dependency-submission@v6
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}

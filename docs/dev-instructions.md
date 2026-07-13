@@ -73,6 +73,11 @@ Android KMP projects that already used `google()` may keep an explicit `gradle/d
 - Registry credentials: create GitHub Actions secrets using uppercase snake case (GitHub stores secret names in uppercase). Reusable workflows map them to `ORG_GRADLE_PROJECT_*` environment variables with camelCase Gradle property suffixes; do not map secrets in consumer workflow YAML (use `secrets: inherit` on the `uses:` job).
   - GitHub Packages (org secrets): `GPR_USER`, `GPR_KEY`
   - Maven Central + signing (org secrets, release publish): `MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD`, `SIGNING_IN_MEMORY_KEY`, `SIGNING_IN_MEMORY_KEY_PASSWORD`
+  - Configuration-cache encryption for the Actions cache (org secret): `GRADLE_ENCRYPTION_KEY` (passed into `setup-gradle` / `dependency-submission` as `cache-encryption-key`)
+- Caching: `gradle/actions` v6 Enhanced Caching is the default (no workflow override). Enable Gradle caches in the consumer’s `gradle.properties` — not via CLI flags in CI:
+  - `org.gradle.configuration-cache=true`
+  - `org.gradle.caching=true`
+
 - Publish on all branches (`push: branches: ["**"]`). On `release`: `./gradlew publishToMavenCentral`; otherwise `./gradlew publishAllPublicationsToGitHubPackagesRepository --parallel`.
 - Set `jdk-versions` to the project JVM toolchain; if the toolchain is below 17, also include `17-temurin` for Gradle. Pass `runs-on` explicitly (typically `ubuntu-latest` for JVM OSS publish).
 

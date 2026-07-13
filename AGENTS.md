@@ -10,7 +10,7 @@ The `copilot/` directory is **no longer maintained**. Do not edit files there; u
 
 | Path | Purpose |
 | --- | --- |
-| `actions/` | Composite actions `setup-javas`, `gradle-check` (deprecated), `gradle-dependency-submission` (deprecated) |
+| `actions/` | Composite actions `setup-javas`, `setup-javas-and-gradle`, `gradle-check` (deprecated), `gradle-dependency-submission` (deprecated) |
 | `.github/workflows/` | Reusable workflows `gradle-ci.yml` and `gradle-maven-publish.yml` |
 | `workflow-templates/` | Starter CI / Dokka workflows for sibling libraries |
 | `docs/` | Kotlin style, dev snapshots, code review, agent baseline |
