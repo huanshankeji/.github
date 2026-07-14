@@ -38,6 +38,7 @@ jobs:
         run: ./gradlew check
 
   dependency-submission:
+    if: github.ref == 'refs/heads/main'
     runs-on: ${{ inputs.runs-on }}
     permissions:
       contents: write

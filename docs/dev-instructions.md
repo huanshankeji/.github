@@ -66,6 +66,7 @@ Android KMP projects that already used `google()` may keep an explicit `gradle/d
 2. For **dirty** local changes in a dependency, run `publishToMavenLocal` in that dependency project so consumers pick up the `-dirty-SNAPSHOT` artifact.
 3. For **committed** dev-commit versions, consumers resolve from Maven local (if present) then GitHub Packages as configured — you do not need `publishToMavenLocal` unless your tree is dirty.
 4. Apply dependency rules recursively when configuring transitive Huanshankeji dependencies.
+5. To resolve **dev-commit** artifacts from GitHub Packages locally, set `gpr.user` / `gpr.key` in `~/.gradle/gradle.properties` with a PAT that has `read:packages`. Document this in each consumer repo’s `CONTRIBUTING.md` when that repo resolves plugins or libraries from GitHub Packages.
 
 ## CI and publishing
 

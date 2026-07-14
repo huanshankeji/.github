@@ -28,6 +28,7 @@ jobs:
         run: ./gradlew check
 
   dependency-submission:
+    if: github.ref == 'refs/heads/main'
 
     runs-on: macos-latest
     permissions:
