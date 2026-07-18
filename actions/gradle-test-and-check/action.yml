@@ -1,18 +1,21 @@
 name: Gradle check
-description: Run Gradle check
+description: >
+  Deprecated — prefer inlining checkout, setup-javas, setup-gradle, and `./gradlew check`
+  in reusable workflows so extra setup steps (e.g. Android SDK) can be inserted.
+  Kept for backward compatibility with existing workflow references.
 
 inputs:
   jdk-versions:
-    description: "Comma-separated list of JDK versions and distributions (supported ones: \"8-zulu\", \"8-temurin\", \"11-temurin\", and \"17-temurin\")"
+    description: "Comma-separated JDK versions and distributions passed to setup-javas"
     required: true
 
 runs:
   using: composite
   steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v6
 
     - name: Set up JDKs
-      uses: huanshankeji/.github/actions/setup-javas@v0.2.0
+      uses: huanshankeji/.github/actions/setup-javas@v0.3.0
       with:
         jdk-versions: ${{ inputs.jdk-versions }}
 

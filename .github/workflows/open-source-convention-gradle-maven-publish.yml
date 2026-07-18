@@ -1,0 +1,50 @@
+name: Open source convention Gradle Maven publish
+
+on:
+  workflow_call:
+    inputs:
+      jdk-versions:
+        description: "Comma-separated JDK versions and distributions passed to setup-javas"
+        required: true
+        type: string
+      runs-on:
+        description: "Runner label"
+        required: true
+        type: string
+
+jobs:
+  publish:
+    runs-on: ${{ inputs.runs-on }}
+    # packages: write is required only when authenticating with GITHUB_TOKEN (repo-scoped);
+    # GPR_* PAT below carries its own scopes. See https://github.com/huanshankeji/gradle-common/pull/65
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up JDKs and Gradle
+        uses: huanshankeji/.github/actions/setup-javas-and-gradle@improve-cross-repo-dependency
+        with:
+          jdk-versions: ${{ inputs.jdk-versions }}
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+      - name: Publish with Gradle Wrapper
+        env:
+          # Org PAT (GPR_*) for GitHub Packages publish. GITHUB_TOKEN works for same-repo publish
+          # only; cross-repo Gradle/Maven resolution in CI still needs GPR_* — see
+          # huanshankeji/.github/.github/workflows/gradle-ci.yml and
+          # https://github.com/huanshankeji/gradle-common/pull/65
+          ORG_GRADLE_PROJECT_gprUser: ${{ secrets.GPR_USER }}
+          ORG_GRADLE_PROJECT_gprKey: ${{ secrets.GPR_KEY }}
+          ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
+          ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+          ORG_GRADLE_PROJECT_signingInMemoryKey: ${{ secrets.SIGNING_IN_MEMORY_KEY }}
+          ORG_GRADLE_PROJECT_signingInMemoryKeyPassword: ${{ secrets.SIGNING_IN_MEMORY_KEY_PASSWORD }}
+        shell: bash
+        run: |
+          if [ "${{ github.ref }}" = "refs/heads/release" ]; then
+            ./gradlew publishAndReleaseToMavenCentral
+          else
+            ./gradlew publishAllPublicationsToGitHubPackagesRepository --parallel
+          fi

@@ -1,0 +1,27 @@
+name: Setup JDKs and Gradle
+description: >
+  Sets up the requested JDKs via setup-javas, then configures Gradle with
+  setup-gradle (Enhanced Caching by default) and a configuration-cache
+  encryption key for cross-job cache reuse.
+
+inputs:
+  jdk-versions:
+    description: "Comma-separated JDK versions and distributions passed to setup-javas"
+    required: true
+  # https://docs.gradle.org/current/userguide/configuration_cache_requirements.html#config_cache:secrets:configuring_encryption_key
+  cache-encryption-key:
+    description: "Base64 AES key for encrypting configuration-cache entries in the Actions cache (pass secrets.GRADLE_ENCRYPTION_KEY)"
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Set up JDKs
+      uses: huanshankeji/.github/actions/setup-javas@v0.3.0
+      with:
+        jdk-versions: ${{ inputs.jdk-versions }}
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v6
+      with:
+        cache-encryption-key: ${{ inputs.cache-encryption-key }}

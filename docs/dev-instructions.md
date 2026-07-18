@@ -1,25 +1,97 @@
 # Development instructions
 
-## Branch versioning conventions
+## Project versioning
 
-- **`dev`**: Active development branch. Snapshot dependencies and a snapshot project version are both permitted.
-- **`main`**: Must not use snapshot dependencies — only stable dependency versions. The project version is conventionally a snapshot version (for example `1.0.0-SNAPSHOT`).
-- **`release`**: Merges from `main` and carries a stable project version. Everything must be stable: dependency versions and the project version. No snapshot dependencies and no snapshot project version.
+Versions are resolved by the `com.huanshankeji.git-version` Gradle plugin (from `gradle-common`):
 
-Other development or feature branches follow the same conventions as `dev` unless a maintainer specifies otherwise.
+| Context | Version format |
+|---|---|
+| `release` branch | `MAJOR.MINOR.PATCH` (plain release) |
+| Committed dev (any other branch) | `MAJOR.MINOR.PATCH-dev-commit-<full-git-hash>` |
+| Dirty working tree | `MAJOR.MINOR.PATCH-dev-commit-<full-git-hash>-dirty-SNAPSHOT` |
 
-## Publish snapshot dependencies of our library projects to Maven local
+Set the semantic base in each repo's `projectBaseVersion` (or equivalent). Do not use branch-suffixed `-SNAPSHOT` versions for committed work.
 
-When you encounter a dependency of a snapshot version under our group prefix `com.huanshankeji` in a consuming project, follow these steps:
+## Dependency rules
 
-- Make sure you have the dependency project locally.
-- Switch to the corresponding branch or check out the corresponding commit in the dependency project. Prefer the `dev` branch over the `main` branch in the dependency project if `dev` is ahead of `main`, unless otherwise instructed.
-- Run `publishToMavenLocal` in the dependency project to make the consuming project build.
-- If the code of one branch causes the consuming project not to build, try:
-   - as already mentioned above, switching to `main` if `dev` doesn't work or exist;
-   - checking out the recent commit messages of the consuming project to see if there is related commit or branch information;
-   - switching a branch with the same name as this one in the consuming project, if one exists in the dependency project;
-   - switching to other branches in the dependency project, preferably those with newer commits;
-   - asking the maintainer which branch of the dependency project the consuming project currently depends on.
+| Your project version | Allowed dependency versions |
+|---|---|
+| Release (`MAJOR.MINOR.PATCH` on `release`) | Stable release only — not `*-dev-commit-*`, not `-SNAPSHOT` |
+| Committed `*-dev-commit-*` | Anything **except** legacy `-SNAPSHOT` coordinates |
+| Dirty (`*-dirty-SNAPSHOT`) | Anything while iterating locally |
 
-Apply this process recursively: if you encounter a snapshot dependency in the dependency project, treat that project as a consuming project and configure its dependencies the same way.
+## Resolving dependencies from registries
+
+Repository order matters. **Maven local is always consulted first** for Huanshankeji artifacts.
+
+| Dependency kind | Resolution order |
+|---|---|
+| Public stable (`com.huanshankeji`, release version) | Maven Central (+ existing public repos that are necessary, for example Google) |
+| Public `*-dev-commit-*` | Maven local → GitHub Packages |
+| Dirty / legacy `-SNAPSHOT` | Maven local only |
+| Gradle plugin (stable) | Gradle Plugin Portal |
+| Gradle plugin (`*-dev-commit-*`) | Maven local → GitHub Packages |
+
+Plugins follow the same registry rules as libraries, except the Gradle Plugin Portal replaces Maven Central for stable plugins. Early classpath setup (`pluginManagement` / `buildSrc`) cannot call `gradle-common` repository helpers yet (chicken-and-egg), so each consumer duplicates a simplified block in `gradle/classpath-bootstrap.gradle.kts` with:
+
+1. Gradle Plugin Portal (stable plugins)
+2. Maven local → GitHub Packages, only for `huanshankeji/gradle-common` `*-dev-commit-*` artifacts including snapshots
+
+For project / library dependency resolution, configure repositories explicitly in `dependencyResolutionManagement` — nothing adds them by default. Typical pattern:
+
+```kotlin
+@file:OptIn(com.huanshankeji.GradleCommonExperimentalApi::class)
+
+import com.huanshankeji.artifacts.mavenRepositoryHandlerContext
+import com.huanshankeji.team.artifacts.mavenCentralExcludingHuanshankeji
+import com.huanshankeji.team.gitversioning.opensourcemavenconvention.githubpackages.huanshankejiGithubPackagesOpenSourceMavenConventionProjectRepositories
+
+dependencyResolutionManagement {
+    repositories {
+        mavenCentralExcludingHuanshankeji()
+        // googleWithContentFiltering() — only when the project needs Google's Maven repository
+        mavenRepositoryHandlerContext(providers, ::uri) {
+            // each GitHub Packages sibling whose library artifacts you resolve
+            huanshankejiGithubPackagesOpenSourceMavenConventionProjectRepositories("kotlin-common")
+        }
+    }
+}
+```
+
+`huanshankejiGithubPackagesOpenSourceMavenConventionProjectRepositories` wires Maven local (SNAPSHOT + `*-dev-commit-*`), GitHub Packages (`*-dev-commit-*`), and Maven Central (releases) for that sibling. List only siblings whose **library** artifacts you resolve (as opposed to **gradle-common** classpath / plugin deps) — not every OSS library needs **kotlin-common**. Examples:
+
+| Repository | Typical sibling GitHub Packages repos |
+| --- | --- |
+| **kotlin-common** | _(none — only `mavenCentralExcludingHuanshankeji()`)_ |
+| **compose-html-material** | _(none — plus `googleWithContentFiltering()`)_ |
+| **compose-multiplatform-html-unified** | `"compose-html-material"` (plus `googleWithContentFiltering()`) |
+| **exposed-vertx-sql-client** | `"kotlin-common"`, `"exposed-gadt-mapping"` |
+
+**gradle-common** plugins are resolved via `pluginManagement` / `buildSrc` through `classpath-bootstrap`, not via the sibling block above.
+
+## Local development workflow
+
+1. When a downstream project needs unpublished upstream changes (classpath / plugin deps such as `gradle-common`, or library deps), run `./gradlew publishToMavenLocal` in each upstream repo so consumers resolve them from Maven local. For **dirty** trees this publishes the `-dirty-SNAPSHOT` artifact; for **committed** `*-dev-commit-*` versions, Maven local is optional if the artifact is already on GitHub Packages, but still useful when iterating before push.
+2. Across multiple repos that depend on each other’s `*-dev-commit-*` versions: publish upstreams to Maven local, build and verify the chain locally first, then push and re-verify on CI.
+3. For the **final** commits of a multi-repo task, push upstream first and wait for its publish GitHub Actions workflow to finish before pushing downstream, so downstream CI can resolve the new artifacts. When the upstream task has multiple commits, during development (especially for AI agents) skip that upstream-first wait for intermediate / non-final upstream commits — either leave those commits unpushed, or push the related repos together and accept that their CI may fail until you do a final upstream-then-downstream push.
+4. Apply dependency rules recursively when configuring transitive Huanshankeji dependencies.
+5. To resolve **`*-dev-commit-*`** artifacts from GitHub Packages locally, set `gpr.user` / `gpr.key` in `~/.gradle/gradle.properties` with a PAT that has `read:packages`. Document this in each consumer repo’s `CONTRIBUTING.md` when that repo resolves plugins or libraries from GitHub Packages.
+
+## CI and publishing
+
+- OSS libraries use reusable workflows from `huanshankeji/.github`: `gradle-ci.yml` and `open-source-convention-gradle-maven-publish.yml`.
+- Registry credentials: create GitHub Actions secrets using uppercase snake case (GitHub stores secret names in uppercase). Reusable workflows map them to `ORG_GRADLE_PROJECT_*` environment variables with camelCase Gradle property suffixes; do not map secrets in consumer workflow YAML (use `secrets: inherit` on the `uses:` job).
+  - GitHub Packages (org secrets): `GPR_USER`, `GPR_KEY`
+  - Maven Central + signing (org secrets, release publish): `MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD`, `SIGNING_IN_MEMORY_KEY`, `SIGNING_IN_MEMORY_KEY_PASSWORD`
+  - Configuration-cache encryption for the Actions cache (org secret): `GRADLE_ENCRYPTION_KEY` (passed into `setup-gradle` / `dependency-submission` as `cache-encryption-key`)
+- Caching: `gradle/actions` v6 Enhanced Caching is the default (no workflow override). Enable Gradle caches in the consumer’s `gradle.properties` — not via CLI flags in CI:
+  - `org.gradle.caching=true`
+  - `org.gradle.configuration-cache=true`
+
+- Publish on all branches (`push: branches: ["**"]`). On `release`: `./gradlew publishToMavenCentral`; otherwise `./gradlew publishAllPublicationsToGitHubPackagesRepository --parallel`.
+- Set `jdk-versions` to the project JVM toolchain; if the toolchain is below 17, also include `17-temurin` for Gradle. Pass `runs-on` explicitly (typically `ubuntu-latest` for JVM OSS publish).
+
+## Branches
+
+- **`main`** (and other non-`release` branches): active development; committed `*-dev-commit-*` project versions and mixed dependency versions per the tables above; no legacy `-SNAPSHOT` dependencies on committed work.
+- **`release`**: stable versions only; stable dependencies only.

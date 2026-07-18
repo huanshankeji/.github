@@ -1,0 +1,61 @@
+name: Gradle CI
+
+on:
+  workflow_call:
+    inputs:
+      jdk-versions:
+        description: "Comma-separated JDK versions and distributions passed to setup-javas"
+        required: true
+        type: string
+      runs-on:
+        description: "Runner label for both jobs"
+        required: true
+        type: string
+
+jobs:
+  check:
+    runs-on: ${{ inputs.runs-on }}
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up JDKs and Gradle
+        uses: huanshankeji/.github/actions/setup-javas-and-gradle@improve-cross-repo-dependency
+        with:
+          jdk-versions: ${{ inputs.jdk-versions }}
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+      - name: Check with Gradle Wrapper
+        env:
+          # GPR_* (PAT, read:packages): resolve Gradle/Maven dev artifacts from another repo's GitHub
+          # Packages registry (e.g. kotlin-common pulling huanshankeji/gradle-common). GITHUB_TOKEN is
+          # repo-scoped; Maven/Gradle packages have no cross-repo "Manage Actions access" UI.
+          # https://github.com/huanshankeji/gradle-common/pull/65
+          ORG_GRADLE_PROJECT_gprUser: ${{ secrets.GPR_USER }}
+          ORG_GRADLE_PROJECT_gprKey: ${{ secrets.GPR_KEY }}
+        shell: bash
+        run: ./gradlew check
+
+  dependency-submission:
+    if: github.ref == 'refs/heads/main'
+    # It seems sufficient to run dependency submission for Kotlin Multiplatform on Ubuntu instead of macOS.
+    runs-on: ${{ inputs.runs-on }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Set up JDKs
+        uses: huanshankeji/.github/actions/setup-javas@v0.3.0
+        with:
+          jdk-versions: ${{ inputs.jdk-versions }}
+
+      - name: Generate and submit dependency graph
+        uses: gradle/actions/dependency-submission@v6
+        env:
+          # Same as check job — https://github.com/huanshankeji/gradle-common/pull/65
+          ORG_GRADLE_PROJECT_gprUser: ${{ secrets.GPR_USER }}
+          ORG_GRADLE_PROJECT_gprKey: ${{ secrets.GPR_KEY }}
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}

@@ -1,0 +1,14 @@
+name: Publish
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["**"]
+
+jobs:
+  publish:
+    uses: huanshankeji/.github/.github/workflows/open-source-convention-gradle-maven-publish.yml@improve-cross-repo-dependency
+    secrets: inherit
+    with:
+      jdk-versions: 11-temurin, 17-temurin
+      runs-on: ubuntu-latest
