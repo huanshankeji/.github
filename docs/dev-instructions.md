@@ -71,9 +71,9 @@ dependencyResolutionManagement {
 
 ## Local development workflow
 
-1. Publish upstream `gradle-common` plugins to Maven local when working on a `*-dev-commit-*` version: `./gradlew publishToMavenLocal` in `gradle-common`.
-2. For **dirty** local changes in a dependency, run `publishToMavenLocal` in that dependency project so consumers pick up the `-dirty-SNAPSHOT` artifact.
-3. For **committed** `*-dev-commit-*` versions, consumers resolve from Maven local (if present) then GitHub Packages as configured — you do not need `publishToMavenLocal` unless your tree is dirty.
+1. When a downstream project needs unpublished upstream changes (classpath / plugin deps such as `gradle-common`, or library deps), run `./gradlew publishToMavenLocal` in each upstream repo so consumers resolve them from Maven local. For **dirty** trees this publishes the `-dirty-SNAPSHOT` artifact; for **committed** `*-dev-commit-*` versions, Maven local is optional if the artifact is already on GitHub Packages, but still useful when iterating before push.
+2. Across multiple repos that depend on each other’s `*-dev-commit-*` versions: publish upstreams to Maven local, build and verify the chain locally first, then push and re-verify on CI.
+3. For the **final** commits of a multi-repo task, push upstream first and wait for its publish GitHub Actions workflow to finish before pushing downstream, so downstream CI can resolve the new artifacts. When the upstream task has multiple commits, during development (especially for AI agents) skip that upstream-first wait for intermediate / non-final upstream commits — either leave those commits unpushed, or push the related repos together and accept that their CI may fail until you do a final upstream-then-downstream push.
 4. Apply dependency rules recursively when configuring transitive Huanshankeji dependencies.
 5. To resolve **`*-dev-commit-*`** artifacts from GitHub Packages locally, set `gpr.user` / `gpr.key` in `~/.gradle/gradle.properties` with a PAT that has `read:packages`. Document this in each consumer repo’s `CONTRIBUTING.md` when that repo resolves plugins or libraries from GitHub Packages.
 
