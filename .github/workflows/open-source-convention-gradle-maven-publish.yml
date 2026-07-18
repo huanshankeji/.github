@@ -1,10 +1,10 @@
-name: Gradle Maven publish
+name: Open source convention Gradle Maven publish
 
 on:
   workflow_call:
     inputs:
       jdk-versions:
-        description: "Comma-separated JDK versions passed to setup-javas"
+        description: "Comma-separated JDK versions and distributions passed to setup-javas"
         required: true
         type: string
       runs-on:

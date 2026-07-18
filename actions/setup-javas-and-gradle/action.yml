@@ -6,8 +6,9 @@ description: >
 
 inputs:
   jdk-versions:
-    description: "Comma-separated list of JDK versions and distributions (supported ones: \"8-zulu\", \"8-temurin\", \"11-temurin\", \"17-temurin\", \"21-temurin\", and \"25-temurin\")"
+    description: "Comma-separated JDK versions and distributions passed to setup-javas"
     required: true
+  # https://docs.gradle.org/current/userguide/configuration_cache_requirements.html#config_cache:secrets:configuring_encryption_key
   cache-encryption-key:
     description: "Base64 AES key for encrypting configuration-cache entries in the Actions cache (pass secrets.GRADLE_ENCRYPTION_KEY)"
     required: true

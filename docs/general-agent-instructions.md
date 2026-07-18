@@ -92,11 +92,11 @@ flowchart TB
 ```
 
 - **gradle-common** — Shared Gradle plugins (`kotlin-common-gradle-plugins`, `gradle-plugins`, `common-gradle-dependencies`, etc.). Other repos pull these into `buildSrc` for aligned Kotlin, Compose, Dokka, and dependency versions. Not a runtime app dependency for end users, but required to build sibling libraries.
-- **kotlin-common** — Foundation Kotlin/KMP extensions (core, coroutines, Exposed, Vert.x, Ktor, Arrow, etc.). **exposed-gadt-mapping** and **exposed-vertx-sql-client** depend on `kotlin-common-*` modules.
+- **kotlin-common** — Foundation Kotlin/KMP extensions (core, coroutines, Exposed, Vert.x, Ktor, Arrow, etc.). Some other libraries depend on one or more `kotlin-common-*` modules.
 - **exposed-gadt-mapping** — Exposed DSL mappings with GADT-style modeling. **No longer actively maintained**; mapping code is usually generated ad hoc with AI agents instead. Still published and used by the optional `crud-with-mapper` module in **exposed-vertx-sql-client**.
 - **exposed-vertx-sql-client** — Run Exposed statements on Vert.x reactive SQL clients (PostgreSQL, MySQL, Oracle, SQL Server). The optional **`crud-with-mapper`** module integrates **exposed-gadt-mapping**.
-- **compose-html-material** — Material 3 wrappers for Compose HTML (Material Web). Does **not** depend on **kotlin-common** at runtime; only **gradle-common** for build plugins.
-- **compose-multiplatform-html-unified** — Unified Compose Multiplatform APIs for Compose UI and Compose HTML; **compose-html-material** is a DOM/Material source for the HTML side. Does **not** depend on **kotlin-common** at runtime.
+- **compose-html-material** — Material 3 wrappers for Compose HTML (Material Web).
+- **compose-multiplatform-html-unified** — Unified Compose Multiplatform APIs for Compose UI and Compose HTML; **compose-html-material** is a DOM/Material source for the HTML side.
 
 ### Repository catalog
 
@@ -122,7 +122,7 @@ flowchart TB
 1. Open the target repo and read its `README.md`, `CONTRIBUTING.md`, and any repo-local agent file (`AGENTS.md`, `.github/copilot-instructions.md`).
 2. Apply the [required reading](#required-reading) for the task type.
 3. If the task matches an [agent skill](#agent-skills) (Gradle wrapper updates, misleading Kotlin “Unresolved reference” errors, or a skill in [skills](https://github.com/huanshankeji/skills)), install or load that skill and follow it.
-4. If the task spans multiple repos (typical on `dev` with snapshots), follow [dev-instructions.md](dev-instructions.md) before running `./gradlew check` or `./gradlew build`.
+4. If the task spans multiple repos (typical with `*-dev-commit-*` / dirty-SNAPSHOT dependencies), follow [dev-instructions.md](dev-instructions.md) before running `./gradlew check` or `./gradlew build`.
 5. When working across **multiple Gradle projects** in one session, pass **`--no-daemon`** on every `./gradlew` invocation (and run `./gradlew --stop` first if daemons are already running). Many concurrent daemons can exhaust memory and crash the machine.
 
 When instructions conflict, **repo-local agent docs and maintainers’ task directions win**; this file provides the shared baseline and library map.
