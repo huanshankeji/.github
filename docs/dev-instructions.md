@@ -75,20 +75,19 @@ dependencyResolutionManagement {
 2. Across multiple repos that depend on each other’s `*-dev-commit-*` versions: publish upstreams to Maven local, build and verify the chain locally first, then push and re-verify on CI.
 3. For the **final** commits of a multi-repo task, push upstream first and wait for its publish GitHub Actions workflow to finish before pushing downstream, so downstream CI can resolve the new artifacts. When the upstream task has multiple commits, during development (especially for AI agents) skip that upstream-first wait for intermediate / non-final upstream commits — either leave those commits unpushed, or push the related repos together and accept that their CI may fail until you do a final upstream-then-downstream push.
 4. Apply dependency rules recursively when configuring transitive Huanshankeji dependencies.
-5. To resolve **`*-dev-commit-*`** artifacts from GitHub Packages locally, set `gpr.user` / `gpr.key` in `~/.gradle/gradle.properties` with a PAT that has `read:packages`. Document this in each consumer repo’s `CONTRIBUTING.md` when that repo resolves plugins or libraries from GitHub Packages.
+5. To resolve **`*-dev-commit-*`** artifacts from GitHub Packages locally, set `gpr.user` / `gpr.key` in `~/.gradle/gradle.properties` with a PAT that has `read:packages`. Document this in each consumer repo’s `CONTRIBUTING.md` when that repo resolves plugins or libraries from GitHub Packages. Prefer these dotted names locally; camelCase `gprUser` / `gprKey` are mainly for GitHub Actions (`ORG_GRADLE_PROJECT_*`) and should not be set in `~/.gradle/gradle.properties`.
 
 ## CI and publishing
 
-- OSS libraries use reusable workflows from `huanshankeji/.github`: `gradle-ci.yml` and `open-source-convention-gradle-maven-publish.yml`.
-- Registry credentials: create GitHub Actions secrets using uppercase snake case (GitHub stores secret names in uppercase). Reusable workflows map them to `ORG_GRADLE_PROJECT_*` environment variables with camelCase Gradle property suffixes; do not map secrets in consumer workflow YAML (use `secrets: inherit` on the `uses:` job).
+- OSS libraries use reusable workflows from `huanshankeji/.github`: `gradle-ci.yml` and `open-source-convention-gradle-maven-publish.yml`. Prefer the `team-ci.yml` / `team-publish.yml` workflow templates over the older inline `kotlin-jvm-ci.yml` / `kotlin-multiplatform-ci.yml` starters (those still omit GPR env and cache encryption).
+- Registry credentials: create GitHub Actions secrets using uppercase snake case (GitHub stores secret names in uppercase). Reusable workflows map them to `ORG_GRADLE_PROJECT_*` environment variables with camelCase Gradle property suffixes (`gprUser` / `gprKey`); do not map secrets in consumer workflow YAML (use `secrets: inherit` on the `uses:` job).
   - GitHub Packages (org secrets): `GPR_USER`, `GPR_KEY`
   - Maven Central + signing (org secrets, release publish): `MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD`, `SIGNING_IN_MEMORY_KEY`, `SIGNING_IN_MEMORY_KEY_PASSWORD`
-  - Configuration-cache encryption for the Actions cache (org secret): `GRADLE_ENCRYPTION_KEY` (passed into `setup-gradle` / `dependency-submission` as `cache-encryption-key`)
+  - Configuration-cache encryption for the Actions cache (org secret): `GRADLE_ENCRYPTION_KEY` (passed into `setup-gradle` / `dependency-submission` as `cache-encryption-key`). If this secret is missing, the workflow still runs but configuration-cache entries are not stored in the Actions cache (`setup-gradle` warns).
 - Caching: `gradle/actions` v6 Enhanced Caching is the default (no workflow override). Enable Gradle caches in the consumer’s `gradle.properties` — not via CLI flags in CI:
   - `org.gradle.caching=true`
   - `org.gradle.configuration-cache=true`
-
-- Publish on all branches (`push: branches: ["**"]`). On `release`: `./gradlew publishToMavenCentral`; otherwise `./gradlew publishAllPublicationsToGitHubPackagesRepository --parallel`.
+- Publish on all branches (`push: branches: ["**"]`). On `release`: `./gradlew publishAndReleaseToMavenCentral`; otherwise `./gradlew publishAllPublicationsToGitHubPackagesRepository --parallel`.
 - Set `jdk-versions` to the project JVM toolchain; if the toolchain is below 17, also include `17-temurin` for Gradle. Pass `runs-on` explicitly (typically `ubuntu-latest` for JVM OSS publish).
 
 ## Branches

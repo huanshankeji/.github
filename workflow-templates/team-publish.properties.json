@@ -1,0 +1,9 @@
+{
+    "name": "Huanshankeji Team Gradle Maven publish (reusable workflow)",
+    "description": "Calls huanshankeji/.github open-source-convention-gradle-maven-publish.yml (GitHub Packages on non-release; publishAndReleaseToMavenCentral on release) with secrets: inherit. Update jdk-versions and runs-on as needed.",
+    "categories": [
+        "Deployment",
+        "Kotlin",
+        "Gradle"
+    ]
+}

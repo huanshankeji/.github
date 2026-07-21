@@ -1,0 +1,9 @@
+{
+    "name": "Huanshankeji Team Gradle CI (reusable workflow)",
+    "description": "Calls huanshankeji/.github gradle-ci.yml (check + main-only dependency submission) with secrets: inherit. Prefer this over the inline kotlin-*-ci templates for our org libraries. Update jdk-versions and runs-on (macos-latest is costly; use ubuntu-latest for JVM-only).",
+    "categories": [
+        "Continuous integration",
+        "Kotlin",
+        "Gradle"
+    ]
+}
