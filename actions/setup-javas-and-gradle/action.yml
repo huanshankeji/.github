@@ -2,7 +2,10 @@ name: Setup JDKs and Gradle
 description: >
   Sets up the requested JDKs via setup-javas, then configures Gradle with
   setup-gradle (Enhanced Caching by default) and a configuration-cache
-  encryption key for cross-job cache reuse.
+  encryption key for cross-job cache reuse. Cache writes are enabled on all
+  branches by default (cache-read-only: false) so feature-branch CI can persist
+  Gradle User Home / local build-cache entries; GitHub Actions caches are
+  branch-scoped anyway.
 
 inputs:
   jdk-versions:
@@ -12,6 +15,13 @@ inputs:
   cache-encryption-key:
     description: "Base64 AES key for encrypting configuration-cache entries in the Actions cache (pass secrets.GRADLE_ENCRYPTION_KEY; empty skips config-cache caching)"
     required: true
+  # setup-gradle defaults cache-read-only to true on non-default branches, which
+  # restores caches but never saves them — successive feature-branch runs cannot
+  # reuse local build-cache outputs. Override to false so all branches write.
+  cache-read-only:
+    description: "When true, restore Gradle caches but do not save (setup-gradle default on non-default branches). Default false so feature branches persist build cache."
+    required: false
+    default: "false"
 
 runs:
   using: composite
@@ -25,3 +35,4 @@ runs:
       uses: gradle/actions/setup-gradle@v6
       with:
         cache-encryption-key: ${{ inputs.cache-encryption-key }}
+        cache-read-only: ${{ inputs.cache-read-only }}

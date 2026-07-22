@@ -20,11 +20,27 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # setup-javas-and-gradle defaults cache-read-only: false so non-main branches
+      # persist Gradle User Home / local build cache (Actions caches are branch-scoped).
       - name: Set up JDKs and Gradle
-        uses: huanshankeji/.github/actions/setup-javas-and-gradle@v0.4.1
+        uses: huanshankeji/.github/actions/setup-javas-and-gradle@cursor/gradle-cache-write-feature-branches
         with:
           jdk-versions: ${{ inputs.jdk-versions }}
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+      # setup-gradle@v6 no longer persists configuration-cache entries the way older
+      # setups did. Entries live under .gradle/configuration-cache in the checkout;
+      # restoring buildSrc/build avoids false invalidation when buildSrc task inputs
+      # appear to have changed.
+      - name: Cache Gradle configuration cache and buildSrc
+        uses: actions/cache@v4
+        with:
+          path: |
+            .gradle/configuration-cache
+            buildSrc/build
+          key: ${{ runner.os }}-${{ runner.arch }}-configcache-check-${{ hashFiles('**/*.gradle.kts', '**/*.gradle', 'gradle.properties', 'gradle/wrapper/gradle-wrapper.properties', 'buildSrc/**/*.kt') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-configcache-check-
 
       - name: Check with Gradle Wrapper
         env:

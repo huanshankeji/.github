@@ -23,11 +23,24 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
+      # setup-javas-and-gradle defaults cache-read-only: false so non-main branches
+      # persist Gradle User Home / local build cache (Actions caches are branch-scoped).
       - name: Set up JDKs and Gradle
-        uses: huanshankeji/.github/actions/setup-javas-and-gradle@v0.4.1
+        uses: huanshankeji/.github/actions/setup-javas-and-gradle@cursor/gradle-cache-write-feature-branches
         with:
           jdk-versions: ${{ inputs.jdk-versions }}
           cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+      # Cache buildSrc outputs only. Publish often disables configuration cache, and
+      # commit-based snapshot versions churn CC inputs — do not Action-cache
+      # .gradle/configuration-cache here.
+      - name: Cache buildSrc outputs
+        uses: actions/cache@v4
+        with:
+          path: buildSrc/build
+          key: ${{ runner.os }}-${{ runner.arch }}-buildsrc-${{ hashFiles('buildSrc/**/*.kt', 'buildSrc/**/*.kts', 'buildSrc/**/*.gradle*', 'gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ runner.arch }}-buildsrc-
 
       - name: Publish with Gradle Wrapper
         env:

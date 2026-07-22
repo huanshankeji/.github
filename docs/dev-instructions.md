@@ -84,7 +84,7 @@ dependencyResolutionManagement {
   - GitHub Packages (org secrets): `GPR_USER`, `GPR_KEY`
   - Maven Central + signing (org secrets, release publish): `MAVEN_CENTRAL_USERNAME`, `MAVEN_CENTRAL_PASSWORD`, `SIGNING_IN_MEMORY_KEY`, `SIGNING_IN_MEMORY_KEY_PASSWORD`
   - Configuration-cache encryption for the Actions cache (org secret): `GRADLE_ENCRYPTION_KEY` (passed into `setup-gradle` / `dependency-submission` as `cache-encryption-key`). If this secret is missing, the workflow still runs but configuration-cache entries are not stored in the Actions cache (`setup-gradle` warns).
-- Caching: `gradle/actions` v6 Enhanced Caching is the default (no workflow override). Enable Gradle caches in the consumer’s `gradle.properties` — not via CLI flags in CI:
+- Caching: `gradle/actions` v6 Enhanced Caching is the default. `setup-javas-and-gradle` sets `cache-read-only: false` so feature branches write Gradle User Home / local build-cache entries (setup-gradle’s default is read-only on non-default branches; Actions caches are branch-scoped anyway). Reusable `gradle-ci.yml` also caches `.gradle/configuration-cache` and `buildSrc/build`; publish caches `buildSrc/build` only. Enable Gradle caches in the consumer’s `gradle.properties` — not via CLI flags in CI:
   - `org.gradle.caching=true`
   - `org.gradle.configuration-cache=true`
 - Publish on all branches (`push: branches: ["**"]`). On `release`: `./gradlew publishAndReleaseToMavenCentral`; otherwise `./gradlew publishAllPublicationsToGitHubPackagesRepository --parallel`.

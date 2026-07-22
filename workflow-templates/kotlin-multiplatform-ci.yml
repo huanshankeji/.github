@@ -23,6 +23,9 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v6
+        with:
+          # Write Gradle User Home / build-cache on every branch (default is read-only off main).
+          cache-read-only: false
 
       - name: Check with Gradle Wrapper
         run: ./gradlew check
