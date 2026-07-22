@@ -15,7 +15,7 @@ runs:
     - uses: actions/checkout@v7
 
     - name: Set up JDKs
-      uses: huanshankeji/.github/actions/setup-javas@v0.4.0
+      uses: huanshankeji/.github/actions/setup-javas@v0.4.1
       with:
         jdk-versions: ${{ inputs.jdk-versions }}
 
