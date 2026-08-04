@@ -11,11 +11,10 @@ When working on **public Kotlin libraries** (or related open-source work) publis
 
 ## Canonical source (load the full document)
 
-Load **one** of these (prefer a path that already exists in the workspace; otherwise fetch):
+Load **one** of these:
 
-1. Workspace clone of this org repo: `docs/general-agent-instructions.md` under `huanshankeji/.github`
+1. Workspace clone of this org repo: `docs/general-agent-instructions.md` under `huanshankeji/.github` — only if that clone is on `main` and has the latest changes pulled (`git fetch` / `git pull` on `main`). If you cannot verify or update it, use the raw URL instead.
 2. Raw GitHub: https://raw.githubusercontent.com/huanshankeji/.github/main/docs/general-agent-instructions.md
-3. GitHub blob: https://github.com/huanshankeji/.github/blob/main/docs/general-agent-instructions.md
 
 Use your available tools (`Read`, `WebFetch`, `gh api`, `curl`, etc.). Treat a failed or skipped load as a blocking error for the task until the document is in context.
 
@@ -23,7 +22,6 @@ Use your available tools (`Read`, `WebFetch`, `gh api`, `curl`, etc.). Treat a f
 
 1. Follow that document’s **Required reading**, **Agent skills**, repo hierarchy, and working practices for the task type.
 2. Load linked required docs (Kotlin style, dev/snapshot instructions, engineering guidelines; code-review instructions when reviewing) the same way — do not invent org standards from memory.
-3. Also read the **target repository’s** local agent docs (`AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, `README` / `CONTRIBUTING`) for build steps and architecture.
 
 ## Precedence
 

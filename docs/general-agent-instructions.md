@@ -4,10 +4,6 @@ Instructions for AI coding agents working on **Kotlin libraries** published by [
 
 This file is [`docs/general-agent-instructions.md`](https://github.com/huanshankeji/.github/blob/main/docs/general-agent-instructions.md) in the [`.github`](https://github.com/huanshankeji/.github) organization repository. For **this** repo, start with the root [`AGENTS.md`](../AGENTS.md). Other projects may add their own `AGENTS.md`, `CLAUDE.md`, or `.github/copilot-instructions.md`; **follow those for repo-specific build steps and architecture**, and use this file for organization-wide standards and library relationships.
 
-### Cursor plugin (enforced load)
-
-To stop agents from skipping this document when a repo only links to it, install the Cursor plugin [Huanshankeji Agent Instructions](../plugins/huanshankeji-agent-instructions/README.md) from this repository’s Team Marketplace (mark **Required** for Cloud + team). Its always-apply rule mandates loading this file before other work.
-
 ---
 
 ## Required reading
