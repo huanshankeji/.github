@@ -138,3 +138,14 @@ When changing code, **preserve existing comments and blank lines** unless the us
 - Do not reformat unrelated parts of a file (whitespace, line breaks, comment style) while making a focused change.
 
 Keep edits minimal: change only what the task requires, and leave surrounding comments and vertical spacing as you found them.
+
+## Avoid unnecessary changes
+
+Try **not** to make unnecessary changes, especially in feature PRs. Focus the diff on the task; do not leave behind drive-by cleanup, speculative refactors, or temporary scaffolding that is not part of the requested work.
+
+If possibly unnecessary changes were made during debugging or testing:
+
+1. **Revert / restore them afterwards** once they are no longer needed.
+2. If such changes are **uncommitted**, revert / restore **before committing**.
+3. If such changes were **committed** and are confirmed unnecessary — especially in a PR — **commit again** to revert / restore.
+4. If they are needed for further review or debugging and **cannot** be reverted / restored immediately, leave a **TODO** in the code **and** in the PR description to revert / restore.

@@ -4,4 +4,6 @@ Instructions to follow during code review.
 
 - Don't suggest removing code commented out in the latest changes or the pull request.
 
-   Code is commented out for a reason. Don't suggest removing code that is newly commented out in the latest changes or the pull request. Only suggest if it's confirmed stale code.
+  Code is commented out for a reason. Don't suggest removing code that is newly commented out in the latest changes or the pull request. Only suggest if it's confirmed stale code.
+
+- Flag possibly unnecessary changes left from debugging or testing (especially in feature PRs), unless they are clearly marked with a TODO to revert / restore. See [Avoid unnecessary changes](general-agent-instructions.md#avoid-unnecessary-changes).
