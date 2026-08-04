@@ -7,7 +7,7 @@ alwaysApply: true
 
 This rule is **always applied**. It is not optional guidance.
 
-When working on **public Kotlin libraries** (or related open-source work) published by `@huanshankeji` / [Chengdu Huanshan Technology](https://github.com/huanshankeji), you **MUST** load and follow the organization agent baseline **before** exploring, planning, or editing — do **not** skip this fetch because a repo `AGENTS.md` only links to it.
+When working on **Kotlin libraries** published by `@huanshankeji` / [Chengdu Huanshan Technology](https://github.com/huanshankeji), you **MUST** load and follow the organization agent baseline **before** exploring, planning, or editing — do **not** skip this fetch because a repo `AGENTS.md` only links to it.
 
 ## Canonical source (load the full document)
 
@@ -20,7 +20,7 @@ Use your available tools (`Read`, `WebFetch`, `gh api`, `curl`, etc.). Treat a f
 
 ## After loading
 
-1. Follow that document’s **Required reading**, **Agent skills**, repo hierarchy, and working practices for the task type.
+1. Follow that document’s **Required reading**, repo hierarchy, and working practices for the task type.
 2. Load linked required docs (Kotlin style, dev/snapshot instructions, engineering guidelines; code-review instructions when reviewing) the same way — do not invent org standards from memory.
 
 ## Precedence
