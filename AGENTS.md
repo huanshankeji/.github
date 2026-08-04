@@ -4,6 +4,8 @@ This repo is **huanshankeji/.github**: organization profile, shared docs, compos
 
 For organization-wide Kotlin library standards, the public repo catalog, shared workflows, and [agent skills](docs/general-agent-instructions.md#agent-skills), see [docs/general-agent-instructions.md](docs/general-agent-instructions.md).
 
+**Cursor:** Install the [Huanshankeji Agent Instructions](plugins/huanshankeji-agent-instructions/README.md) plugin (Team Marketplace, preferably **Required**) so local and Cloud agents always apply a rule that forces loading those org instructions. Marketplace manifest: [`.cursor-plugin/marketplace.json`](.cursor-plugin/marketplace.json).
+
 The `copilot/` directory is **no longer maintained**. Do not edit files there; use this `AGENTS.md` and `docs/` instead.
 
 ## Layout
@@ -14,6 +16,8 @@ The `copilot/` directory is **no longer maintained**. Do not edit files there; u
 | `.github/workflows/` | Reusable workflows `gradle-ci.yml` and `open-source-convention-gradle-maven-publish.yml` |
 | `workflow-templates/` | Starter CI / Dokka workflows for sibling libraries |
 | `docs/` | Kotlin style, dev snapshots, code review, agent baseline |
+| `plugins/` | Cursor Team Marketplace plugin(s), including org agent-instructions always-apply rule |
+| `.cursor-plugin/` | Marketplace manifest for importing this repo as a Cursor Team Marketplace |
 | `profile/` | GitHub org profile README |
 
 Consumer Kotlin libraries (gradle-common, kotlin-common, etc.) are separate clones. Use JDK and `./gradlew check` per their README. Snapshot chaining is documented in [docs/dev-instructions.md](docs/dev-instructions.md).

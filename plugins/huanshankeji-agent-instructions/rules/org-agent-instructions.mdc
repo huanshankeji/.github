@@ -1,0 +1,30 @@
+---
+description: Mandatory @huanshankeji org agent baseline — must load general-agent-instructions.md
+alwaysApply: true
+---
+
+# @huanshankeji org agent instructions (mandatory)
+
+This rule is **always applied**. It is not optional guidance.
+
+When working on **public Kotlin libraries** (or related open-source work) published by `@huanshankeji` / [Chengdu Huanshan Technology](https://github.com/huanshankeji), you **MUST** load and follow the organization agent baseline **before** exploring, planning, or editing — do **not** skip this fetch because a repo `AGENTS.md` only links to it.
+
+## Canonical source (load the full document)
+
+Load **one** of these (prefer a path that already exists in the workspace; otherwise fetch):
+
+1. Workspace clone of this org repo: `docs/general-agent-instructions.md` under `huanshankeji/.github`
+2. Raw GitHub: https://raw.githubusercontent.com/huanshankeji/.github/main/docs/general-agent-instructions.md
+3. GitHub blob: https://github.com/huanshankeji/.github/blob/main/docs/general-agent-instructions.md
+
+Use your available tools (`Read`, `WebFetch`, `gh api`, `curl`, etc.). Treat a failed or skipped load as a blocking error for the task until the document is in context.
+
+## After loading
+
+1. Follow that document’s **Required reading**, **Agent skills**, repo hierarchy, and working practices for the task type.
+2. Load linked required docs (Kotlin style, dev/snapshot instructions, engineering guidelines; code-review instructions when reviewing) the same way — do not invent org standards from memory.
+3. Also read the **target repository’s** local agent docs (`AGENTS.md`, `CLAUDE.md`, `.github/copilot-instructions.md`, `README` / `CONTRIBUTING`) for build steps and architecture.
+
+## Precedence
+
+When instructions conflict: **repo-local agent docs and maintainers’ task directions win**; the org general agent instructions remain the shared must-follow baseline.

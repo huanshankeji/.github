@@ -1,0 +1,19 @@
+{
+  "name": "huanshankeji-agent-instructions",
+  "displayName": "Huanshankeji Agent Instructions",
+  "version": "0.1.0",
+  "description": "Enforced always-apply rule that requires agents to load and follow @huanshankeji org agent instructions.",
+  "author": {
+    "name": "Chengdu Huanshan Technology",
+    "email": "chengduhuanshankeji@hotmail.com"
+  },
+  "homepage": "https://github.com/huanshankeji/.github",
+  "repository": "https://github.com/huanshankeji/.github",
+  "keywords": [
+    "huanshankeji",
+    "agent-instructions",
+    "kotlin",
+    "rules"
+  ],
+  "rules": "./rules/"
+}
