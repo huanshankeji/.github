@@ -24,9 +24,9 @@ This file is [`docs/general-agent-instructions.md`](https://github.com/huanshank
 
 ---
 
-## Kotlin project hierarchy
+## Open source Kotlin project hierarchy
 
-**Only non-fork Kotlin repositories** created by `@huanshankeji` are listed below.
+**Only public, non-fork Kotlin repositories** created by `@huanshankeji` are listed below.
 
 ### Dependency layers
 
