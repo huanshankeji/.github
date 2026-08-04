@@ -14,37 +14,27 @@ This addresses agents that skip linked org docs from repo-local `AGENTS.md` file
 
 Approach: short mandatory fetch directive (not an embedded copy of the full doc). Source of truth stays in `docs/general-agent-instructions.md`.
 
-## Install — Team Marketplace (Teams / Enterprise; local + Cloud)
+## Install — Team Marketplace (recommended for local + Cloud)
 
-Admins (Cursor **Teams** / **Enterprise** only — not Pro / Pro+):
+Admins (Cursor Teams / Enterprise):
 
-1. Open **Dashboard → Plugins → Team Marketplaces** (or Desktop **Settings → Plugins** import, if available on your plan).
-2. Import this GitHub repository root: `https://github.com/huanshankeji/.github` (must be a branch that already contains `.cursor-plugin/marketplace.json`, normally `main` after merge).
-3. Confirm Cursor parses marketplace name `huanshankeji-plugins` and lists **Huanshankeji Agent Instructions**.
-4. Set the plugin to **Required** so local members and **Cloud agents** receive the always-apply rule.
-5. Optionally enable marketplace auto-refresh so pushes update the plugin.
+1. Open **Dashboard → Plugins → Team Marketplaces**.
+2. **Import** / **Add Marketplace** from this GitHub repository: `https://github.com/huanshankeji/.github`.
+3. Confirm Cursor parses `.cursor-plugin/marketplace.json` and lists **Huanshankeji Agent Instructions**.
+4. Set the plugin to **Required** (auto-install; cannot be removed) so local members and **Cloud agents** receive the always-apply rule.
+5. Optionally enable marketplace auto-refresh so pushes to this repo update the plugin.
 
-**Do not** expect paste-install to work against `main` before this plugin is merged: Cursor reads the default branch. The repo name `.github` is not a valid marketplace id if Cursor falls back to it — the manifest `name` must be kebab-case (`huanshankeji-plugins`).
+Developers then see the plugin under **Customize → Plugins** (Required plugins install automatically).
 
-## Install — local test (any plan, including Pro+; works before merge)
+## Install — local development
 
-Official local path: put the **plugin directory** (not the whole `.github` repo) at `~/.cursor/plugins/local/<name>/` with `.cursor-plugin/plugin.json` at that root.
+For testing a checkout without Team Marketplace:
 
-Plugin folder on the PR branch:
+1. Symlink or copy `plugins/huanshankeji-agent-instructions` into your Cursor plugins directory (for example `~/.cursor/plugins/local/huanshankeji-agent-instructions`), keeping `.cursor-plugin/plugin.json` and `rules/`.
+2. Reload the Cursor window.
+3. Confirm **Rules** shows the org agent-instructions rule as **Always Apply**.
 
-https://github.com/huanshankeji/.github/tree/cursor/org-agent-instructions-plugin-be52/plugins/huanshankeji-agent-instructions
-
-```bash
-git clone -b cursor/org-agent-instructions-plugin-be52 \
-  https://github.com/huanshankeji/.github.git huanshankeji-github
-mkdir -p ~/.cursor/plugins/local
-ln -sfn "$(pwd)/huanshankeji-github/plugins/huanshankeji-agent-instructions" \
-  ~/.cursor/plugins/local/huanshankeji-agent-instructions
-```
-
-Then **Developer: Reload Window**. Confirm **Settings → Rules** shows the org agent-instructions rule as **Always Apply**.
-
-Team Marketplace **Required** remains the path for Cloud agent enforcement.
+Exact local registration paths can vary by Cursor version; Team Marketplace **Required** remains the supported path for Cloud agents.
 
 ## Verify
 

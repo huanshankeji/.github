@@ -21,8 +21,7 @@
 
 ```json
 {
-  "name": "huanshankeji-plugins",
-  "displayName": "Huanshankeji Plugins",
+  "name": "huanshankeji",
   "owner": {
     "name": "Chengdu Huanshan Technology",
     "email": "chengduhuanshankeji@hotmail.com"
