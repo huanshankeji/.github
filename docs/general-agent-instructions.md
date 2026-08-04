@@ -141,7 +141,7 @@ Keep edits minimal: change only what the task requires, and leave surrounding co
 
 ## Avoid unnecessary changes
 
-Try **not** to make unnecessary changes, especially in feature PRs. Focus the diff on the task; do not leave behind drive-by cleanup, speculative refactors, or temporary scaffolding that is not part of the requested work.
+Try **not** to make unnecessary changes, especially in PRs. Focus the diff on the task; do not leave behind drive-by cleanup, speculative refactors, or temporary scaffolding that is not part of the requested work.
 
 If possibly unnecessary changes were made during debugging or testing:
 
