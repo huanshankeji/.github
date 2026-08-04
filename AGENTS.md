@@ -14,6 +14,8 @@ The `copilot/` directory is **no longer maintained**. Do not edit files there; u
 | `.github/workflows/` | Reusable workflows `gradle-ci.yml` and `open-source-convention-gradle-maven-publish.yml` |
 | `workflow-templates/` | Starter CI / Dokka workflows for sibling libraries |
 | `docs/` | Kotlin style, dev snapshots, code review, agent baseline |
+| `plugins/` | Cursor Team Marketplace plugin(s), including org agent-instructions always-apply rule |
+| `.cursor-plugin/` | Marketplace manifest for importing this repo as a Cursor Team Marketplace |
 | `profile/` | GitHub org profile README |
 
 Consumer Kotlin libraries (gradle-common, kotlin-common, etc.) are separate clones. Use JDK and `./gradlew check` per their README. Snapshot chaining is documented in [docs/dev-instructions.md](docs/dev-instructions.md).
