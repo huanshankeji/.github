@@ -22,6 +22,7 @@ The always-apply rule is a short, hard mandate: before other work on `@huanshank
 ## Architecture
 
 - Multi-plugin marketplace layout at repo root (Cursor Team Marketplace import of `huanshankeji/.github`).
+- Marketplace id: `huanshankeji-plugins` (kebab-case; avoid falling back to the repo name `.github`, which is not a valid marketplace id).
 - One plugin: `huanshankeji-agent-instructions`.
 - One rule: `rules/org-agent-instructions.mdc` with `alwaysApply: true`.
 - Install docs in the plugin README; brief pointers from root `AGENTS.md` and `docs/general-agent-instructions.md`.
