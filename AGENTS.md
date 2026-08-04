@@ -2,7 +2,7 @@
 
 This repo is **huanshankeji/.github**: organization profile, shared docs, composite GitHub Actions, and workflow templates. It is **not** a Gradle/Kotlin application. There is no `./gradlew`, dev server, or database to run here.
 
-For organization-wide Kotlin library standards, the public repo catalog, shared workflows, and [agent skills](docs/general-agent-instructions.md#agent-skills), see [docs/general-agent-instructions.md](docs/general-agent-instructions.md).
+For organization-wide Kotlin library standards, the repo catalog, and shared workflows, see [docs/general-agent-instructions.md](docs/general-agent-instructions.md).
 
 **Cursor:** Install the [Huanshankeji Agent Instructions](plugins/huanshankeji-agent-instructions/README.md) plugin (Team Marketplace, preferably **Required**) so local and Cloud agents always apply a rule that forces loading those org instructions. Marketplace manifest: [`.cursor-plugin/marketplace.json`](.cursor-plugin/marketplace.json).
 
