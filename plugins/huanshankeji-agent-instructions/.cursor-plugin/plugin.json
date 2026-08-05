@@ -1,7 +1,7 @@
 {
   "name": "huanshankeji-agent-instructions",
   "displayName": "Huanshankeji Agent Instructions",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Enforced always-apply rule that requires agents to load and follow @huanshankeji org agent instructions.",
   "author": {
     "name": "Chengdu Huanshan Technology",
