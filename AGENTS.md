@@ -2,7 +2,7 @@
 
 This repo is **huanshankeji/.github**: organization profile, shared docs, composite GitHub Actions, and workflow templates. It is **not** a Gradle/Kotlin application. There is no `./gradlew`, dev server, or database to run here.
 
-For organization-wide Kotlin library standards, the repo catalog, and shared workflows, see [docs/general-agent-instructions.md](docs/general-agent-instructions.md).
+For organization-wide Kotlin project standards, the repo catalog, and shared workflows, see [docs/general-agent-instructions.md](docs/general-agent-instructions.md).
 
 The `copilot/` directory is **no longer maintained**. Do not edit files there; use this `AGENTS.md` and `docs/` instead.
 
@@ -18,4 +18,4 @@ The `copilot/` directory is **no longer maintained**. Do not edit files there; u
 | `.cursor-plugin/` | Marketplace manifest for importing this repo as a Cursor Team Marketplace |
 | `profile/` | GitHub org profile README |
 
-Consumer Kotlin libraries (gradle-common, kotlin-common, etc.) are separate clones. Use JDK and `./gradlew check` per their README. Snapshot chaining is documented in [docs/dev-instructions.md](docs/dev-instructions.md).
+Other `@huanshankeji` Kotlin projects (gradle-common, kotlin-common, etc.) are separate clones. Use JDK and `./gradlew check` per their README. Snapshot chaining is documented in [docs/dev-instructions.md](docs/dev-instructions.md).
