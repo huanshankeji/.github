@@ -6,13 +6,24 @@ Instructions for AI coding agents working on **Kotlin projects** by [Chengdu Hua
 
 ## Required reading
 
-### Every Kotlin task
+### Every Kotlin coding task
 
 | Topic | Document |
 | --- | --- |
 | Kotlin formatting and idioms | [kotlin-code-style.md](kotlin-code-style.md) |
-| Snapshot / cross-repo development | [dev-instructions.md](dev-instructions.md) |
 | Engineering principles (FP, types, modularity) | [kotlin-coding-and-software-engineering-guidelines.md](kotlin-coding-and-software-engineering-guidelines.md) |
+
+### Sibling dependencies, new modules, which repo to clone or touch, or multi-repo / cross-repo work
+
+| Topic | Document |
+| --- | --- |
+| Open-source library map | [project-hierarchy.md](project-hierarchy.md) |
+
+### Snapshot, multi-repo, registry, CI, or publish work
+
+| Topic | Document |
+| --- | --- |
+| Versioning, registries, `--no-daemon`, local workflow, OSS CI | [dev-instructions.md](dev-instructions.md) |
 
 ### Code review tasks only
 
@@ -20,65 +31,7 @@ Instructions for AI coding agents working on **Kotlin projects** by [Chengdu Hua
 | --- | --- |
 | Code review behavior | [code-review-instructions.md](code-review-instructions.md) |
 
----
-
-## Open source Kotlin project hierarchy
-
-**Only public, non-fork Kotlin repositories** created by `@huanshankeji` are listed below, plus [`.github`](https://github.com/huanshankeji/.github) for shared CI.
-
-### Dependency layers
-
-Build tooling sits at the bottom; libraries stack upward. Arrows mean “depends on (directly or via published artifacts / build logic)”.
-
-```mermaid
-flowchart TB
-  gradle_common["gradle-common<br/>Gradle plugins & common-gradle-dependencies"]
-  kotlin_common["kotlin-common<br/>Core & extension libraries"]
-  exposed_gadt["exposed-gadt-mapping<br/>(unmaintained)"]
-  compose_html["compose-html-material"]
-  exposed_vertx["exposed-vertx-sql-client"]
-  cmp_unified["compose-multiplatform-html-unified"]
-
-  gradle_common --> kotlin_common
-  gradle_common --> exposed_gadt
-  gradle_common --> compose_html
-  gradle_common --> exposed_vertx
-  gradle_common --> cmp_unified
-
-  kotlin_common --> exposed_gadt
-  kotlin_common --> exposed_vertx
-
-  exposed_gadt -->|"crud-with-mapper module"| exposed_vertx
-  compose_html --> cmp_unified
-```
-
-- **gradle-common** — Shared Gradle plugins (`kotlin-common-gradle-plugins`, `gradle-plugins`, `common-gradle-dependencies`, etc.). Other repos pull these into `buildSrc` for aligned Kotlin, Compose, Dokka, and dependency versions. Not a library dependency (`api` / `implementation`) for consumers, but required to build sibling libraries.
-- **kotlin-common** — Foundation Kotlin/KMP extensions (core, coroutines, Exposed, Vert.x, Ktor, Arrow, etc.). Some other libraries depend on one or more `kotlin-common-*` modules.
-- **exposed-gadt-mapping** — Exposed DSL mappings with GADT-style modeling. **No longer actively maintained**; mapping code is usually generated ad hoc with AI agents instead. Still published and used by the optional `crud-with-mapper` module in **exposed-vertx-sql-client**.
-- **exposed-vertx-sql-client** — Run Exposed statements on Vert.x reactive SQL clients (PostgreSQL, MySQL, Oracle, SQL Server). The optional **`crud-with-mapper`** module integrates **exposed-gadt-mapping**.
-- **compose-html-material** — Material 3 wrappers for Compose HTML (Material Web).
-- **compose-multiplatform-html-unified** — Unified Compose Multiplatform APIs for Compose UI and Compose HTML; **compose-html-material** is a DOM/Material source for the HTML side.
-
-### Repository catalog
-
-| Repository | Role | Notes |
-| --- | --- | --- |
-| [.github](https://github.com/huanshankeji/.github) | Shared CI & Actions | Reusable `gradle-ci.yml` / `open-source-convention-gradle-maven-publish.yml`; composite `actions/`; starter `workflow-templates/`. Details: [dev-instructions.md](dev-instructions.md#ci-and-publishing) |
-| [gradle-common](https://github.com/huanshankeji/gradle-common) | Build infrastructure | [Plugin portal](https://plugins.gradle.org/search?term=com.huanshankeji); [API docs](https://huanshankeji.github.io/gradle-common/) |
-| [kotlin-common](https://github.com/huanshankeji/kotlin-common) | Shared Kotlin/KMP libraries | [Maven Central](https://search.maven.org/search?q=g:com.huanshankeji%20a:kotlin-common-*); [API docs](https://huanshankeji.github.io/kotlin-common/) |
-| [exposed-gadt-mapping](https://github.com/huanshankeji/exposed-gadt-mapping) | Exposed GADT mapping | Unmaintained now; Highly experimental; [API docs](https://huanshankeji.github.io/exposed-gadt-mapping/) |
-| [exposed-vertx-sql-client](https://github.com/huanshankeji/exposed-vertx-sql-client) | Exposed + Vert.x SQL client | JVM; see repo `CONTRIBUTING.md` / copilot instructions |
-| [compose-html-material](https://github.com/huanshankeji/compose-html-material) | Compose HTML Material 3 | [API docs](https://huanshankeji.github.io/compose-html-material/api-documentation/) |
-| [compose-multiplatform-html-unified](https://github.com/huanshankeji/compose-multiplatform-html-unified) | CMP + HTML unified UI | [Demo](https://huanshankeji.github.io/compose-multiplatform-html-unified/demo/); [API docs](https://huanshankeji.github.io/compose-multiplatform-html-unified/api-documentation/) |
-
----
-
-## Working on a single repository
-
-1. If the task spans multiple repos (typical with `*-dev-commit-*` / dirty-SNAPSHOT dependencies), follow [dev-instructions.md](dev-instructions.md) before running `./gradlew check` or `./gradlew build`.
-2. When working across **multiple Gradle projects** in one session, pass **`--no-daemon`** on every `./gradlew` invocation (and run `./gradlew --stop` first if daemons are already running). Many concurrent daemons can exhaust memory and crash the machine.
-
-When instructions conflict, **repo-local agent docs and maintainers’ task directions win**; this file provides the shared baseline and library map.
+Apply the [required reading](#required-reading) for the task type. When instructions conflict, **repo-local agent docs and maintainers’ task directions win**; this file provides the shared baseline.
 
 ---
 

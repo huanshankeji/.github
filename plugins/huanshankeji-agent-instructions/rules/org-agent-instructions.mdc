@@ -20,8 +20,8 @@ Use your available tools (`Read`, `WebFetch`, `gh api`, `curl`, etc.). Treat a f
 
 ## After loading
 
-1. Follow that document’s **Required reading**, repo hierarchy, and working practices for the task type.
-2. Load linked required docs (Kotlin style, dev/snapshot instructions, engineering guidelines; code-review instructions when reviewing) the same way — do not invent org standards from memory.
+1. Follow that document’s **Required reading** for the task type.
+2. Load linked required docs the same way — do not invent org standards from memory.
 
 ## Precedence
 
