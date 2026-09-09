@@ -2,8 +2,6 @@
 
 Instructions for AI coding agents working on **Kotlin projects** by [Chengdu Huanshan Technology](https://github.com/huanshankeji) (`@huanshankeji`). We focus on [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html), [Vert.x](https://vertx.io/), functional programming, and type-safety.
 
-This file is [`docs/general-agent-instructions.md`](https://github.com/huanshankeji/.github/blob/main/docs/general-agent-instructions.md) in the [`.github`](https://github.com/huanshankeji/.github) organization repository. For **this** repo, start with the root [`AGENTS.md`](../AGENTS.md). Other projects may add their own `AGENTS.md`, `CLAUDE.md`, or `.github/copilot-instructions.md`; **follow those for repo-specific build steps and architecture**, and use this file for organization-wide standards and library relationships.
-
 ---
 
 ## Required reading
@@ -74,17 +72,14 @@ flowchart TB
 
 ### Related organization resources
 
-- **Profile / intro:** [profile/README.md](../profile/README.md)
 - **Shared CI & Actions:** workflow templates and composite actions in this repo (`workflow-templates/`, `actions/`)
 
 ---
 
 ## Working on a single repository
 
-1. Open the target repo and read its `README.md`, `CONTRIBUTING.md`, and any repo-local agent file (`AGENTS.md`, `.github/copilot-instructions.md`).
-2. Apply the [required reading](#required-reading) for the task type.
-3. If the task spans multiple repos (typical with `*-dev-commit-*` / dirty-SNAPSHOT dependencies), follow [dev-instructions.md](dev-instructions.md) before running `./gradlew check` or `./gradlew build`.
-4. When working across **multiple Gradle projects** in one session, pass **`--no-daemon`** on every `./gradlew` invocation (and run `./gradlew --stop` first if daemons are already running). Many concurrent daemons can exhaust memory and crash the machine.
+1. If the task spans multiple repos (typical with `*-dev-commit-*` / dirty-SNAPSHOT dependencies), follow [dev-instructions.md](dev-instructions.md) before running `./gradlew check` or `./gradlew build`.
+2. When working across **multiple Gradle projects** in one session, pass **`--no-daemon`** on every `./gradlew` invocation (and run `./gradlew --stop` first if daemons are already running). Many concurrent daemons can exhaust memory and crash the machine.
 
 When instructions conflict, **repo-local agent docs and maintainers’ task directions win**; this file provides the shared baseline and library map.
 
