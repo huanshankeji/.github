@@ -12,6 +12,6 @@ The `copilot/` directory is **no longer maintained**. Do not edit files there; u
 | `.github/workflows/` | Reusable workflows `gradle-ci.yml` and `open-source-convention-gradle-maven-publish.yml` |
 | `workflow-templates/` | Starter CI / Dokka workflows for sibling libraries |
 | `docs/` | Org docs — see [docs/README.md](docs/README.md) |
-| `plugins/` | Cursor Team Marketplace plugin(s), including org agent-instructions always-apply rule |
+| `plugins/` | Cursor Team Marketplace plugin(s), including org agent-instructions always-apply rule and skill |
 | `.cursor-plugin/` | Marketplace manifest for importing this repo as a Cursor Team Marketplace |
 | `profile/` | GitHub org profile README |

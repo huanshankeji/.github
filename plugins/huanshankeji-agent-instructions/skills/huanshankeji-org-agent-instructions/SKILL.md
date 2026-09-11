@@ -1,11 +1,20 @@
 ---
-description: Mandatory @huanshankeji org agent baseline — must load general-agent-instructions.md
-alwaysApply: true
+name: huanshankeji-org-agent-instructions
+description: >
+  Mandatory @huanshankeji org agent baseline — must load
+  general-agent-instructions.md before exploring, planning, or editing
+  Kotlin work. Complementary to the matching Cursor rule: Cloud Agents
+  often miss plugin rules but do load plugin skills. Skip reading and
+  enforcing this skill when that Cursor rule is already read and
+  enforced. Use on every Kotlin task in @huanshankeji repos (local,
+  Agents Window, and Cloud), even when AGENTS.md already links the doc.
 ---
 
 # @huanshankeji org agent instructions (mandatory)
 
-This rule is **always applied**. It is not optional guidance.
+This skill is **always applied**. It is not optional guidance.
+
+This skill is complementary to the matching Cursor rule. If that rule is already read and enforced in this session, skip the rest of this skill.
 
 When working on **Kotlin projects** by `@huanshankeji`, you **MUST** load and follow the organization agent baseline **before** exploring, planning, or editing — do **not** skip this fetch because a repo `AGENTS.md` only links to it.
 

@@ -1,8 +1,8 @@
 {
   "name": "huanshankeji-agent-instructions",
   "displayName": "Huanshankeji Agent Instructions",
-  "version": "0.1.2",
-  "description": "Enforced always-apply rule that requires agents to load and follow @huanshankeji org agent instructions.",
+  "version": "0.2.0",
+  "description": "Enforced always-apply rule and matching skill that require agents to load and follow @huanshankeji org agent instructions.",
   "author": {
     "name": "Chengdu Huanshan Technology",
     "email": "chengduhuanshankeji@hotmail.com"
@@ -13,7 +13,9 @@
     "huanshankeji",
     "agent-instructions",
     "kotlin",
-    "rules"
+    "rules",
+    "skills"
   ],
-  "rules": "./rules/"
+  "rules": "./rules/",
+  "skills": "./skills/"
 }

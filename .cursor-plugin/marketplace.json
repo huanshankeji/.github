@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "Cursor plugins for the @huanshankeji organization",
-    "version": "0.1.2"
+    "version": "0.2.0"
   },
   "plugins": [
     {
       "name": "huanshankeji-agent-instructions",
       "source": "./plugins/huanshankeji-agent-instructions",
-      "description": "Always-apply rule that forces loading @huanshankeji org agent instructions"
+      "description": "Always-apply rule and skill that force loading @huanshankeji org agent instructions"
     }
   ]
 }
