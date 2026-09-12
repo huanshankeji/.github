@@ -8,7 +8,7 @@ When working across **multiple Gradle projects** in one session (any `@huanshank
 
 ## Project versioning
 
-Versions are resolved by the `com.huanshankeji.git-version` Gradle plugin (from `gradle-common`):
+Versions are resolved by gradle-common function APIs on `providers` (`devCommitOrReleaseVersionProvider` / `devCommitVersionProvider`):
 
 | Context | Version format |
 |---|---|
