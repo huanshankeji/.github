@@ -2,6 +2,8 @@
 
 Instructions for AI coding agents working on **Kotlin projects** by [Chengdu Huanshan Technology](https://github.com/huanshankeji) (`@huanshankeji`). We focus on [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html), [Vert.x](https://vertx.io/), functional programming, and type-safety.
 
+**Code** and **file** mean all source code, including build files. Gradle Kotlin DSL files are **Kotlin sources**.
+
 ---
 
 ## Required reading
@@ -37,7 +39,7 @@ Apply the [required reading](#required-reading) for the task type. When instruct
 
 ## Editing existing files
 
-When changing code, **preserve existing comments and blank lines** unless the user explicitly asks you to remove or reformat them, or the change inherently requires it (for example, deleting the code a comment describes).
+When changing code, **preserve existing comments (including TODOs and commented-out code) and blank lines** unless the user explicitly asks you to remove or reformat them, or the change inherently requires it (for example, deleting the code a comment describes).
 
 - Do not remove comments on your own judgment — even if they look redundant, outdated, or unnecessary.
 - Do not remove or collapse blank lines to “clean up” formatting or shrink the diff.
