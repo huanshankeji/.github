@@ -7,6 +7,7 @@ The files below are for **agents and human developers**. Humans need not read ev
 | Document | When |
 | --- | --- |
 | [kotlin-code-style.md](kotlin-code-style.md) | Kotlin formatting and idioms |
+| [match-existing-code.md](match-existing-code.md) | Move or split a module, or match a build script to an existing one |
 | [kotlin-coding-and-software-engineering-guidelines.md](kotlin-coding-and-software-engineering-guidelines.md) | FP, types, modularity |
 | [project-hierarchy.md](project-hierarchy.md) | Which public library to use or clone; multi-repo map |
 | [dev-instructions.md](dev-instructions.md) | Versions, registries, `--no-daemon`, local multi-repo workflow, OSS CI; Gradle copy-paste in [repository setup](dev-instructions-repository-setup.md); CI secrets/cache in [CI details](dev-instructions-ci.md) |

@@ -1,5 +1,7 @@
 # Our Kotlin code style
 
+These rules apply to Kotlin source and to Gradle Kotlin DSL (`*.gradle.kts`, `*.settings.gradle.kts`).
+
 1. Try to golf the code, prefer `also`, `apply`, `let`, `run` to `if`-`else` when they are idiomatic Kotlin and they shorten the code, and try all of them and use the shortest one.
 1. In most cases, don't create a variable if it is used only once, unless extracting variables greatly improves readability. However, when you see existing code using or not using variables used only once, don't try to change it unless you are a maintainer and decide on a better way.
 1. For a long comment paragraph that spans multiple lines, use block comments instead of multiple lines of single-line comments.

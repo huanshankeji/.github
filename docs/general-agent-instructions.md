@@ -25,25 +25,35 @@ Instructions for AI coding agents working on **Kotlin projects** by [Chengdu Hua
 | --- | --- |
 | Versioning, registries, `--no-daemon`, local workflow, OSS CI | [dev-instructions.md](dev-instructions.md) |
 
+### Move, split, or match an existing module
+
+| Topic | Document |
+| --- | --- |
+| Move or split a module, or match a build script to an existing one | [match-existing-code.md](match-existing-code.md) |
+
 ### Code review tasks only
 
 | Topic | Document |
 | --- | --- |
 | Code review behavior | [code-review-instructions.md](code-review-instructions.md) |
 
-Apply the [required reading](#required-reading) for the task type. When instructions conflict, **repo-local agent docs and maintainers’ task directions win**; this file provides the shared baseline.
+Apply the [required reading](#required-reading) for the task type. When instructions conflict, **repo-local agent docs and maintainers’ task directions win** over this file, and this file wins over an upstream skill or template sample.
 
 ---
 
 ## Editing existing files
 
-When changing code, **preserve existing comments and blank lines** unless the user explicitly asks you to remove or reformat them, or the change inherently requires it (for example, deleting the code a comment describes).
+When changing a file — Kotlin source, Gradle Kotlin DSL (`*.gradle.kts`), settings scripts, manifests, and config — **preserve existing comments, TODOs, commented-out code, and blank lines** unless the user explicitly asks you to remove or reformat them, or the change inherently requires it (for example, deleting the code a comment describes).
 
-- Do not remove comments on your own judgment — even if they look redundant, outdated, or unnecessary.
+- Do not remove comments, TODOs, or commented-out code on your own judgment — even if they look redundant, outdated, or unnecessary.
 - Do not remove or collapse blank lines to “clean up” formatting or shrink the diff.
 - Do not reformat unrelated parts of a file (whitespace, line breaks, comment style) while making a focused change.
 
 Keep edits minimal: change only what the task requires, and leave surrounding comments and vertical spacing as you found them.
+
+Change `AGENTS.md`, this `docs/` tree, and skill files only in a task whose subject is those instructions.
+
+When the task moves or splits a module, or matches a build script to an existing one, read [match-existing-code.md](match-existing-code.md) and finish its checklist before treating the task as done.
 
 ## Avoid unnecessary changes
 
