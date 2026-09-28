@@ -15,6 +15,14 @@ Instructions for AI coding agents working on **Kotlin projects** by [Chengdu Hua
 | Kotlin formatting and idioms | [kotlin-code-style.md](kotlin-code-style.md) |
 | Engineering principles (FP, types, modularity) | [kotlin-coding-and-software-engineering-guidelines.md](kotlin-coding-and-software-engineering-guidelines.md) |
 
+### Gradle build logic
+
+| Topic | Document |
+| --- | --- |
+| Best practices that apply to the change | [Gradle best practices index](https://docs.gradle.org/current/userguide/best_practices_index.html) |
+
+The index lists every section. Follow the pages that apply.
+
 ### Sibling dependencies, new modules, which repo to clone or touch, or multi-repo / cross-repo work
 
 | Topic | Document |
